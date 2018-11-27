@@ -91,7 +91,7 @@ var EntryDetailPage = /** @class */ (function () {
     };
     EntryDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-entry-detail',template:/*ion-inline-start:"/Users/kyliewojciechowski/Desktop/SI669/proj2/src/pages/entry-detail/entry-detail.html"*/'<ion-header>\n  <ion-navbar><ion-title>Edit Diary Entry</ion-title></ion-navbar>\n</ion-header>\n<ion-content padding>\n  <ion-list no-lines>\n    <ion-item color="secondary"><ion-label>Entry title:</ion-label></ion-item>\n    <ion-item><ion-input type="text" placeholder="New Entry" [(ngModel)]="entry.title"></ion-input></ion-item>\n\n    <ion-item color="secondary"><ion-label>Photo</ion-label></ion-item>\n    <ion-item><img  [src]="entry.image" />\n    </ion-item>\n    <button ion-button (click)="takePic()">Take Photo</button>\n\n    \n    <ion-item  color="secondary"><ion-label>Thoughts and experiences: </ion-label></ion-item>\n    <ion-item><ion-textarea placeholder="Today I ..." [(ngModel)]="entry.text"></ion-textarea></ion-item>\n  </ion-list>\n\n  <ion-list>\n    <ion-item>\n      <button ion-button (click)="cancelEntry()">Cancel </button>\n      <button ion-button (click)="saveEntry()">Save</button>\n    </ion-item>\n\n    <ion-item no-lines>\n      <p>Created: {{createDate}}</p>\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/kyliewojciechowski/Desktop/SI669/proj2/src/pages/entry-detail/entry-detail.html"*/,
+            selector: 'page-entry-detail',template:/*ion-inline-start:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/entry-detail/entry-detail.html"*/'<ion-header>\n  <ion-navbar><ion-title>Edit Diary Entry</ion-title></ion-navbar>\n</ion-header>\n<ion-content padding>\n  <ion-list no-lines>\n    <ion-item color="secondary"><ion-label>Entry title:</ion-label></ion-item>\n    <ion-item><ion-input type="text" placeholder="New Entry" [(ngModel)]="entry.title"></ion-input></ion-item>\n\n    <ion-item color="secondary"><ion-label>Photo</ion-label></ion-item>\n    <ion-item><img  [src]="entry.image" />\n    </ion-item>\n    <button ion-button (click)="takePic()">Take Photo</button>\n\n    \n    <ion-item  color="secondary"><ion-label>Thoughts and experiences: </ion-label></ion-item>\n    <ion-item><ion-textarea placeholder="Today I ..." [(ngModel)]="entry.text"></ion-textarea></ion-item>\n  </ion-list>\n\n  <ion-list>\n    <ion-item>\n      <button ion-button (click)="cancelEntry()">Cancel </button>\n      <button ion-button (click)="saveEntry()">Save</button>\n    </ion-item>\n\n    <ion-item no-lines>\n      <p>Created: {{createDate}}</p>\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/entry-detail/entry-detail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -216,7 +216,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/kyliewojciechowski/Desktop/SI669/proj2/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      My Diary\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-list>\n      <ion-item>\n        <button ion-button full (click)="addEntry()">Add Entry</button>\n      </ion-item>\n\n    <ion-item *ngFor="let entry of entries">\n        <ion-label (click)="editEntry(entry.key)">\n        <img class="diaryimage" [src]="entry.image" /></ion-label>\n\n      <ion-label (click)="editEntry(entry.id)"><h2>{{entry.title}}</h2></ion-label>\n      <ion-label (click)="editEntry(entry.id)">\n        <p>{{entry.text}}</p>\n        <p>{{entry.timestamp}}</p>\n\n      </ion-label>\n      \n      <button ion-button clear icon-only item-end (click)="deleteEntry(entry.id)">\n          <ion-icon name="close-circle"></ion-icon>\n        </button>\n    </ion-item>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/kyliewojciechowski/Desktop/SI669/proj2/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Dawg #\n    </ion-title>\n      <button start ion-button icon-only menuToggle>\n        <ion-icon name=\'menu\'></ion-icon>\n      </button>\n\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n      <ion-item>\n        <button ion-button full (click)="addEntry()">Add Entry</button>\n      </ion-item>\n\n    <ion-item *ngFor="let entry of entries">\n        <ion-label (click)="editEntry(entry.key)">\n        <img class="diaryimage" [src]="entry.image" /></ion-label>\n\n      <ion-label (click)="editEntry(entry.id)"><h2>{{entry.title}}</h2></ion-label>\n      <ion-label (click)="editEntry(entry.id)">\n        <p>{{entry.text}}</p>\n        <p>{{entry.timestamp}}</p>\n\n      </ion-label>\n      \n      <button ion-button clear icon-only item-end (click)="deleteEntry(entry.id)">\n          <ion-icon name="close-circle"></ion-icon>\n        </button>\n    </ion-item>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_3__providers_entry_data_service_entry_data_service__["a" /* EntryDataServiceProvider */]])
@@ -322,21 +322,13 @@ var AppModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return firebaseConfig; });
 var firebaseConfig = {
-    // DO NOT PUT YOUR DATA IN THIS FILE. 
-    // DO NOT PUSH REAL DATA TO GITHUB. 
-    apiKey: "AIzaSyBtKz7UswWslStrq8KsmnqxUMzN7oDZ58g",
-    authDomain: "proj2-si669.firebaseapp.com",
-    databaseURL: "https://proj2-si669.firebaseio.com",
-    projectId: "proj2-si669",
-    storageBucket: "proj2-si669.appspot.com",
-    messagingSenderId: "243250519509"
+    apiKey: "AIzaSyAF_TiS6YOScQTXABPml_LEjeWQM81IlFQ",
+    authDomain: "week10-si669.firebaseapp.com",
+    databaseURL: "https://week10-si669.firebaseio.com",
+    projectId: "week10-si669",
+    storageBucket: "week10-si669.appspot.com",
+    messagingSenderId: "619220753684"
 };
-// The real data associated with this file should NOT be hosted on github. 
-// You'll need to create a new file called firefile.ts inside the models folder
-// that contains the real info here 
-// I've added this dummy file so you all have access to it but then add 
-// the real file name to the gitignore file. Git won't ignore files that have 
-// already been pushed so thats why we need a new file. 
 //# sourceMappingURL=firefile.js.map
 
 /***/ }),
@@ -376,7 +368,7 @@ var MyApp = /** @class */ (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/kyliewojciechowski/Desktop/SI669/proj2/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/kyliewojciechowski/Desktop/SI669/proj2/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/app/app.html"*/'<ion-menu [content]="content">\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Main Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n    <ion-content>\n      <ion-list>\n        <ion-item detail-push (click)="openPage(homePage)">\n          Home\n        </ion-item>\n        <ion-item detail-push (click)="openPage(friendsPage)">\n          Pets\n        </ion-item>\n        <ion-item no-lines detail-push (click)="openPage(eventsPage)">\n          Events\n        </ion-item>\n        <ion-item color=\'primary\' menuClose detail-none>Close Menu</ion-item>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n\n<ion-nav id="nav" #content [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/app/app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);

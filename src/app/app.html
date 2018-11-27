@@ -1,1 +1,23 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Main Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item detail-push (click)="openPage(homePage)">
+          Home
+        </ion-item>
+        <ion-item detail-push (click)="openPage(friendsPage)">
+          Pets
+        </ion-item>
+        <ion-item no-lines detail-push (click)="openPage(eventsPage)">
+          Events
+        </ion-item>
+        <ion-item color='primary' menuClose detail-none>Close Menu</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
