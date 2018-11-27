@@ -29,11 +29,11 @@ export class MyApp {
   }
 
   public Home() {
-    this.nav.push(HomePage)
+    this.nav.setRoot(HomePage)
 
   }
   public Detail() {
-    this.nav.push(EntryDetailPage)
+    this.nav.setRoot(EntryDetailPage)
   }
 
 }

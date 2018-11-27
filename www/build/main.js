@@ -216,7 +216,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Dawg #\n    </ion-title>\n      <button start ion-button icon-only menuToggle>\n        <ion-icon name=\'menu\'></ion-icon>\n      </button>\n\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n      <ion-item>\n        <button ion-button full (click)="addEntry()">Add Entry</button>\n      </ion-item>\n\n    <ion-item *ngFor="let entry of entries">\n        <ion-label (click)="editEntry(entry.key)">\n        <img class="diaryimage" [src]="entry.image" /></ion-label>\n\n      <ion-label (click)="editEntry(entry.id)"><h2>{{entry.title}}</h2></ion-label>\n      <ion-label (click)="editEntry(entry.id)">\n        <p>{{entry.text}}</p>\n        <p>{{entry.timestamp}}</p>\n\n      </ion-label>\n      \n      <button ion-button clear icon-only item-end (click)="deleteEntry(entry.id)">\n          <ion-icon name="close-circle"></ion-icon>\n        </button>\n    </ion-item>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Dawg #\n    </ion-title>\n      <button start ion-button icon-only menuToggle>\n        <ion-icon name=\'menu\'></ion-icon>\n      </button>\n\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h1>Household</h1>\n  \n  <h2>People</h2>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col col-33 *ngFor="let entry of entries">\n        <div class= \'card card-1\'>\n          <img [src]= \'entry.image\' alt="Person">\n          <p>{{entry.title}}</p>\n        </div>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-list id= \'peeps\'>\n      <ion-item>\n        <button ion-button full (click)="addEntry()">Add Entry</button>\n      </ion-item>\n\n    <ion-item *ngFor="let entry of entries">\n        <ion-label (click)="editEntry(entry.key)">\n        <img class="diaryimage" [src]="entry.image" /></ion-label>\n\n      <ion-label (click)="editEntry(entry.id)"><h2>{{entry.title}}</h2></ion-label>\n      <ion-label (click)="editEntry(entry.id)">\n        <p>{{entry.text}}</p>\n        <p>{{entry.timestamp}}</p>\n\n      </ion-label>\n      \n      <button ion-button clear icon-only item-end (click)="deleteEntry(entry.id)">\n          <ion-icon name="close-circle"></ion-icon>\n        </button>\n    </ion-item>\n  </ion-list>\n\n  <h2>Pets</h2>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Denver/Desktop/669/git_files/dawg1/dawg/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_entry_data_service_entry_data_service__["a" /* EntryDataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_entry_data_service_entry_data_service__["a" /* EntryDataServiceProvider */]) === "function" && _b || Object])
     ], HomePage);
@@ -371,10 +371,10 @@ var MyApp = /** @class */ (function () {
         });
     }
     MyApp.prototype.Home = function () {
-        this.nav.push(__WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */]);
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */]);
     };
     MyApp.prototype.Detail = function () {
-        this.nav.push(__WEBPACK_IMPORTED_MODULE_5__pages_entry_detail_entry_detail__["a" /* EntryDetailPage */]);
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_entry_detail_entry_detail__["a" /* EntryDetailPage */]);
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('myNav'),
@@ -421,12 +421,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/*
-  Generated class for the EntryDataServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 var EntryDataServiceProvider = /** @class */ (function () {
     function EntryDataServiceProvider(storage) {
         var _this = this;
@@ -539,9 +533,10 @@ var EntryDataServiceProvider = /** @class */ (function () {
     };
     EntryDataServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]) === "function" && _a || Object])
     ], EntryDataServiceProvider);
     return EntryDataServiceProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=entry-data-service.js.map

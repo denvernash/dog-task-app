@@ -12,7 +12,22 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <h1>Household</h1>
+  
+  <h2>People</h2>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-33 *ngFor="let entry of entries">
+        <div class= 'card card-1'>
+          <img [src]= 'entry.image' alt="Person">
+          <p>{{entry.title}}</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list id= 'peeps'>
       <ion-item>
         <button ion-button full (click)="addEntry()">Add Entry</button>
       </ion-item>
@@ -33,5 +48,8 @@
         </button>
     </ion-item>
   </ion-list>
+
+  <h2>Pets</h2>
+
 
 </ion-content>

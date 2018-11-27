@@ -7,13 +7,6 @@ import { firebaseConfig } from '../../models/firefile';
 import firebase from 'firebase';
 
 
-/*
-  Generated class for the EntryDataServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-
 @Injectable()
 export class EntryDataServiceProvider {
 
