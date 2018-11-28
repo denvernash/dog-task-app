@@ -35,6 +35,9 @@ export class HomePage {
 
       }
 
+  ngOnInit() {
+    this.entries = this.entryDataService.getEntries();
+  }
   
   private addEntry() {
     this.navCtrl.push(EntryDetailPage);
