@@ -21,7 +21,7 @@ export class TaskPage {
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider) {
 
-
+      console.log('Constructor')
       let entryID = this.navParams.get("entryID");
       let entry = this.entryDataService.getEntryByID(entryID);
       console.log(entryID)
@@ -47,18 +47,8 @@ export class TaskPage {
 ngOnInit() {
 // this.tasklist = this.entry.tasks
 
-let it1 = new Task
-it1.title = "FAKE TASK 1"
-let it2 = new Task
-it2.title = "FAKE TASK 2"
-let it3 = new Task
-it3.title = "FAKE TASK 3"
-
-
-
-let fakelist = [it1, it2, it3]
-
-this.tasklist = fakelist
+this.getFakeTasks()
+console.log('nginited')
 
 }
 
@@ -66,6 +56,16 @@ private addEntry() {
 this.navCtrl.push(TaskDetailPage);
 }
 
+private getFakeTasks() {
+  let it1 = new Task();
+  it1.title = "FAKE TASK 1";
+  let it2 = new Task();
+  it2.title = "FAKE TASK 2";
+  let it3 = new Task();
+  it3.title = "FAKE TASK 3";
+  let fakelist = [it1, it2, it3];
+  this.tasklist = fakelist;
+}
 
 private editTask(entryID: number) {
 console.log("editing entry ", entryID);
