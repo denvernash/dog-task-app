@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        Task Details
+      </ion-title>
+        <button start ion-button icon-only menuToggle>
+          <ion-icon name='menu'></ion-icon>
+        </button>
+  
+  
+    </ion-navbar>
+  </ion-header>
+
+
+
+
+<ion-content padding>
+  <ion-list no-lines>
+    <ion-item color="secondary"><ion-label>Task:</ion-label></ion-item>
+    <ion-item><ion-input type="text" placeholder="New Entry" [(ngModel)]="entry.title"></ion-input></ion-item>
+
+    
+    <ion-item  color="secondary"><ion-label>Notes: </ion-label></ion-item>
+    <ion-item><ion-textarea placeholder="Today I ..." [(ngModel)]="entry.text"></ion-textarea></ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <button ion-button (click)="cancelEntry()">Cancel </button>
+      <button ion-button (click)="saveEntry()">Save</button>
+    </ion-item>
+
+    <ion-item no-lines>
+      <p>Created: {{createDate}}</p>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

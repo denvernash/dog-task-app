@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content padding>
-    <h1>Pet Name: </h1>
+    <h1>Pet Name: {{entry.title}}</h1>
 
   
     <!-- <ion-grid>
@@ -27,23 +27,12 @@
     <ion-list id= 'peeps'>
         
   
-      <ion-item *ngFor="let entry of entries">
+      <ion-item *ngFor="let item of tasklist">
+  
+        <ion-label><h2>{{item.title}}</h2></ion-label>
+        Hello
         
-          <ion-label (click)="editEntry(entry.key)">
-          <img class="diaryimage" [src]="entry.image" /></ion-label>
-  
-        <ion-label (click)="editEntry(entry.id)"><h2>{{entry.title}}</h2></ion-label>
-        <ion-label (click)="editEntry(entry.id)">
-          <p>{{entry.text}}</p>
-          <p>{{entry.timestamp}}</p>
-  
-        </ion-label>
-        <button ion-button clear icon-only item-start (click)="editEntry(entry.id)">
-            <ion-icon name="create"></ion-icon>
-          </button>
-          <button ion-button clear icon-only item-end (click)="deleteEntry(entry.id)">
-              <ion-icon name="close-circle"></ion-icon>
-            </button>
+        
       </ion-item>
     </ion-list>
 
@@ -51,6 +40,6 @@
 </ion-content>
 <ion-footer>
     <ion-item>
-        <button ion-button full (click)="addEntry()">Add Pet</button>
+        <button ion-button full (click)="addEntry()">Add Task</button>
       </ion-item>
 </ion-footer>

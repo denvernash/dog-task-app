@@ -40,8 +40,8 @@ export class MyApp {
     this.nav.setRoot(CreatePage)
   }
 
-  public Tasking() {
-    console.log("THis is a function")
+  public TaskOverview() {
+    console.log("This is a function")
     this.nav.setRoot(TaskPage)
   }
 
