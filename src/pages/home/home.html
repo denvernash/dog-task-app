@@ -28,9 +28,7 @@
   </ion-grid> -->
 
   <ion-list id= 'peeps'>
-      <ion-item>
-        <button ion-button full (click)="addEntry()">Add Pet</button>
-      </ion-item>
+      
 
     <ion-item *ngFor="let entry of entries">
       
@@ -46,7 +44,7 @@
       <button ion-button clear icon-only item-end (click)="editEntry(entry.id)">
           <ion-icon name="create"></ion-icon>
         </button>
-        <button ion-button clear icon-only item-end (click)="deleteEntry(entry.id)">
+        <button ion-button clear icon-only item-start (click)="deleteEntry(entry.id)">
             <ion-icon name="close-circle"></ion-icon>
           </button>
     </ion-item>
@@ -56,3 +54,8 @@
 
 
 </ion-content>
+<ion-footer>
+    <ion-item>
+        <button ion-button full (click)="addEntry()">Add Pet</button>
+      </ion-item>
+</ion-footer>
