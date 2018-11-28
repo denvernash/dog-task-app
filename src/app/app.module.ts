@@ -8,10 +8,13 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EntryDetailPage } from '../pages/entry-detail/entry-detail';
 import { CreatePage } from '../pages/create/create';
+import { TaskPage } from '../pages/task/task';
+import { TaskDetailPage } from '../pages/task-detail/task-detail';
 import { EntryDataServiceProvider } from '../providers/entry-data-service/entry-data-service';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { NavController } from 'ionic-angular';
+
 
 
 
@@ -21,6 +24,8 @@ import { NavController } from 'ionic-angular';
     HomePage,
     EntryDetailPage,
     CreatePage,
+    TaskPage,
+    TaskDetailPage
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,8 @@ import { NavController } from 'ionic-angular';
     HomePage,
     EntryDetailPage,
     CreatePage,
+    TaskPage,
+    TaskDetailPage
   ],
   providers: [
     StatusBar,

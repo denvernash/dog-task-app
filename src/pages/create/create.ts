@@ -20,8 +20,8 @@ export class CreatePage {
   
   addChecklist(data): void {
 
-    this.alertCtrl.create({
-      header: 'New Checklist',
+    let prompt= this.alertCtrl.create({
+      title: 'New Checklist',
       message: 'Enter the name of your new checklist below:',
       inputs: [
         {
@@ -41,17 +41,16 @@ export class CreatePage {
 
         }
       ]
-    }).then((prompt) => {
-      prompt.present();
     });
+    prompt.present();
 
   }
 
 
   renameChecklist(checklist): void {
 
-    this.alertCtrl.create({
-      header: 'Rename Checklist',
+    let prompt= this.alertCtrl.create({
+      title: 'Rename Checklist',
       message: 'Enter the new name of this checklist below:',
       inputs: [
         {
@@ -71,9 +70,9 @@ export class CreatePage {
           }
         }
       ]
-    }).then((prompt) => {
-      prompt.present();
     });
+    prompt.present();
+   
 
   }
 

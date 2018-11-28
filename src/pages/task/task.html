@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+       Task Overview
+      </ion-title>
+        <button start ion-button icon-only menuToggle>
+          <ion-icon name='menu'></ion-icon>
+        </button>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <h1>Pet Name: {{entry.title}}</h1>
+
+  
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col col-33 *ngFor="let entry of entries">
+          <div class= 'card card-1'>
+            <img [src]= 'entry.image' alt="Person">
+            <p>{{entry.title}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+  
+    <ion-list id= 'peeps'>
+        
+  
+      <ion-item *ngFor="let item of tasklist">
+  
+        <ion-label><h2>{{item.title}}</h2></ion-label>
+        
+        
+        
+      </ion-item>
+    </ion-list>
+
+
+</ion-content>
+<ion-footer>
+    <ion-item>
+        <button ion-button full (click)="addEntry()">Add Task</button>
+      </ion-item>
+</ion-footer>

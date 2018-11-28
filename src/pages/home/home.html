@@ -14,9 +14,9 @@
 <ion-content padding>
   <h1>Household</h1>
   
-  <h2>People</h2>
+  <h2>Pets</h2>
 
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row>
       <ion-col col-33 *ngFor="let entry of entries">
         <div class= 'card card-1'>
@@ -25,31 +25,40 @@
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
   <ion-list id= 'peeps'>
-      <ion-item>
-        <button ion-button full (click)="addEntry()">Add Entry</button>
-      </ion-item>
+      
 
     <ion-item *ngFor="let entry of entries">
-        <ion-label (click)="editEntry(entry.key)">
-        <img class="diaryimage" [src]="entry.image" /></ion-label>
+      
+        <ion-label (click)="taskOverview(entry.key)">
+        <div class= 'card card-1'>
+        <img class="diaryimage" [src]="entry.image" />
+        </div>
+      </ion-label>
 
-      <ion-label (click)="editEntry(entry.id)"><h2>{{entry.title}}</h2></ion-label>
-      <ion-label (click)="editEntry(entry.id)">
+      <ion-label (click)="taskOverview(entry.id)"><h2>{{entry.title}}</h2></ion-label>
+      <ion-label (click)="taskOverview(entry.id)">
         <p>{{entry.text}}</p>
         <p>{{entry.timestamp}}</p>
 
       </ion-label>
-      
-      <button ion-button clear icon-only item-end (click)="deleteEntry(entry.id)">
-          <ion-icon name="close-circle"></ion-icon>
+      <button ion-button clear icon-only item-end (click)="editEntry(entry.id)">
+          <ion-icon name="create"></ion-icon>
         </button>
+        <button ion-button clear icon-only item-start (click)="deleteEntry(entry.id)">
+            <ion-icon name="close-circle"></ion-icon>
+          </button>
     </ion-item>
   </ion-list>
 
-  <h2>Pets blahblahblahs</h2>
+ 
 
 
 </ion-content>
+<ion-footer>
+    <ion-item>
+        <button ion-button full (click)="addEntry()">Add Pet</button>
+      </ion-item>
+</ion-footer>

@@ -7,6 +7,7 @@ import { NavController } from 'ionic-angular';
 import { HomePage } from '../pages/home/home';
 import { EntryDetailPage } from '../pages/entry-detail/entry-detail';
 import { CreatePage } from '../pages/create/create';
+import { TaskPage } from '../pages/task/task'
 
 
 @Component({
@@ -38,5 +39,11 @@ export class MyApp {
   public Create() {
     this.nav.setRoot(CreatePage)
   }
+
+  public TaskOverview() {
+    console.log("This is a function")
+    this.nav.setRoot(TaskPage)
+  }
+
 }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Entry } from '../../models/entry';
 import { EntryDetailPage } from '../entry-detail/entry-detail';
+import { TaskPage } from '../task/task';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 
 
@@ -52,6 +53,11 @@ private editEntry(entryID: number) {
 private deleteEntry(entryID: number) {
   this.entryDataService.removeEntry(entryID)
   console.log('deleting entry', entryID)
+}
+
+private taskOverview(entryID: number) {
+  this.navCtrl.push(TaskPage, {"entryID": entryID});
+  console.log('hello')
 }
 
 
