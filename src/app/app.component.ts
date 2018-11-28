@@ -6,6 +6,8 @@ import { NavController } from 'ionic-angular';
 
 import { HomePage } from '../pages/home/home';
 import { EntryDetailPage } from '../pages/entry-detail/entry-detail';
+import { CreatePage } from '../pages/create/create';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -13,9 +15,6 @@ import { EntryDetailPage } from '../pages/entry-detail/entry-detail';
 export class MyApp {
   @ViewChild('myNav') nav: NavController
   rootPage:any = HomePage;
-
-
-  
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -36,5 +35,8 @@ export class MyApp {
     this.nav.setRoot(EntryDetailPage)
   }
 
+  public Create() {
+    this.nav.setRoot(CreatePage)
+  }
 }
 

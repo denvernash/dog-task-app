@@ -7,16 +7,20 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EntryDetailPage } from '../pages/entry-detail/entry-detail';
+import { CreatePage } from '../pages/create/create';
 import { EntryDataServiceProvider } from '../providers/entry-data-service/entry-data-service';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
+import { NavController } from 'ionic-angular';
+
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    EntryDetailPage
+    EntryDetailPage,
+    CreatePage,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,8 @@ import { Camera } from '@ionic-native/camera';
   entryComponents: [
     MyApp,
     HomePage,
-    EntryDetailPage
+    EntryDetailPage,
+    CreatePage,
   ],
   providers: [
     StatusBar,
