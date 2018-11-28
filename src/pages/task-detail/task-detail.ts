@@ -32,9 +32,7 @@ export class TaskDetailPage {
     this.entry.id = -1; // placeholder for 'temporary' entry
   } else {
   this.entry = this.entryDataService.getEntryByID(entryID);
-  if (typeof this.entry.timestamp === 'string') {
-    this.createDate = new Date(this.entry.timestamp);
-  } else { this.createDate = this.entry.timestamp }
+  
   
 }
     console.log("retrieved entry:", entry);

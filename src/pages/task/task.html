@@ -27,12 +27,11 @@
     <ion-list id= 'peeps'>
         
   
-      <ion-item *ngFor="let item of tasklist">
-  
-        <ion-label><h2>{{item.title}}</h2></ion-label>
-        
-        
-        
+      <ion-item  *ngFor="let item of tasklist">
+        <ion-label>HI {{item.title}}</ion-label>
+        <button ion-button item-end (click)="editTask(entry.id)"> 
+            <ion-icon name="create"></ion-icon>Edit
+          </button>
       </ion-item>
     </ion-list>
 
