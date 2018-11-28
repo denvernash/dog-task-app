@@ -22,7 +22,7 @@ export class TaskDetailPage {
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider) {
 
-    let entryID = this.navParams.get("taskID");
+    let entryID = this.navParams.get("entryID");
     let entry = this.entryDataService.getEntryByID(entryID);
 
   if (entryID === undefined) {
