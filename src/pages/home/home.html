@@ -48,7 +48,7 @@
         <p>{{entry.timestamp}}</p>
 
       </ion-label>
-      <button ion-button clear icon-only item-end (click)="editEntry(entry.id)">
+      <button ion-button item-end (click)="editEntry(entry.id)">Edit
           <ion-icon name="create"></ion-icon>
         </button>
         <button ion-button clear icon-only item-start (click)="deleteEntry(entry.id)">
@@ -56,6 +56,28 @@
           </button>
     </ion-item>
   </ion-list>
+
+  <ion-card *ngFor="let entry of entries">
+      
+  <ion-card-header>
+      Hello {{entry.title}}
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list>
+      <ion-item>
+      <ion-avatar item-start>
+          <img class='av' [src]="entry.image" />
+      </ion-avatar>
+      <h2>{{entry.text}}</h2>
+    </ion-item>
+    <ion-item>
+        {{entry.timestamp}}
+    </ion-item>
+    </ion-list>
+  </ion-card-content>
+
+  </ion-card>
 
  
 

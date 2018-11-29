@@ -87,9 +87,9 @@ public addEntry(entry:Pet) {
   it3.id = 300
   it3.deadline = '3pm'
   // entry.tasks = [it1, it2, it3];
-  // this.entries.push(entry)
-  // this.notifySubscribers();
-  // this.saveData();
+  this.entries.push(entry)
+  this.notifySubscribers();
+  this.saveData();
   
 }
 
