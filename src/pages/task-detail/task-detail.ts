@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Entry } from '../../models/entry';
+import { Entry, Task } from '../../models/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 
 
@@ -14,7 +14,7 @@ import { EntryDataServiceProvider } from '../../providers/entry-data-service/ent
 export class TaskDetailPage {
 
   private entry: Entry;
-  private createDate: Date;
+  private task: Task;
   
 
 
@@ -23,27 +23,38 @@ export class TaskDetailPage {
     public entryDataService: EntryDataServiceProvider) {
 
     let entryID = this.navParams.get("entryID");
-    let entry = this.entryDataService.getEntryByID(entryID);
+    let taskID = this.navParams.get('taskID')
+    console.log("here's what i've got for my id", taskID)
+    this.entry = this.entryDataService.getEntryByID(entryID);
+  
 
-  if (entryID === undefined) {
-    this.entry = new Entry();
-    this.entry.title = "";
-    this.entry.text = "";
-    this.entry.id = -1; // placeholder for 'temporary' entry
+
+  if (taskID === undefined) {
+    this.task = new Task();
+    this.task.title = "";
+    this.task.notes = "";
+    this.task.id = -1; // placeholder for 'temporary' entry
+    console.log('giving taskid -1')
+    this.task.deadline = ''
+    this.task.schedule = ''
   } else {
-  this.entry = this.entryDataService.getEntryByID(entryID);
+    console.log("Here's my id's", taskID, entryID)
+    this.task = this.entryDataService.getTaskByID(taskID);
+  
   
   
 }
-    console.log("retrieved entry:", entry);
+
 
   }
 
 private saveEntry() {
-  if (this.entry.id === -1) { 
-    this.entryDataService.addEntry(this.entry);
+  
+  if (this.task.id === -1) { 
+    this.entryDataService.addTask(this.entry.id, this.task);
   } else {
-    this.entryDataService.updateEntry(this.entry.id, this.entry);
+    // this.entryDataService.updateEntry(this.entry.id, this.entry);
+    console.log("updating entry")
   }
   this.navCtrl.pop();
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Entry } from '../../models/entry';
+import { Entry, Task } from '../../models/entry';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { Storage } from '@ionic/storage';
@@ -8,13 +8,13 @@ import firebase from 'firebase';
 import { Checklist } from '../../models/checklist';
 
 
-
 @Injectable()
 export class EntryDataServiceProvider {
 
 
   private db: any;
   private entries:Entry[] = [];
+  public activeEntry: Entry;
   private serviceObserver: Observer<Entry[]>;
   private clientObservable: Observable<Entry[]>;
   private nextID: number = 0;
@@ -41,7 +41,9 @@ export class EntryDataServiceProvider {
       newbie.image = childSnapshot.val().image;
       newbie.time = childSnapshot.val().time;
       newbie.timestamp = new Date(newbie.time);
-    this.entries.push(newbie);
+      newbie.tasks = childSnapshot.val().tasks;
+      this.activeEntry = newbie;
+      this.entries.push(newbie);
     
      });
      this.notifySubscribers(); 
@@ -72,12 +74,35 @@ public addEntry(entry:Entry) {
   // console.log("HERES YOUR ID", entry.id)
   entry.timestamp = new Date();
   entry.time = entry.timestamp.getTime();
+  let it1 = new Task();
+  it1.title = "FAKE TASK 1";
+  it1.id = 100
+  it1.notes = "NONE"
+  let it2 = new Task();
+  it2.title = "FAKE TASK 2";
+  it2.id = 200
+  it2.schedule = "MONTHLY"
+  let it3 = new Task();
+  it3.title = "FAKE TASK 3";
+  it3.id = 300
+  it3.deadline = '3pm'
+  entry.tasks = [it1, it2, it3];
   this.entries.push(entry)
   this.notifySubscribers();
   this.saveData();
   
 }
 
+public addTask(id: number, newTask: Task) {
+  let foundEntry: Entry = this.findEntryByID(id)
+  newTask.id = this.getUniqueID() + 1000;
+  newTask.complete = false;
+
+  foundEntry.tasks.push(newTask);
+  console.log("Just pushed task", newTask.id, "to", foundEntry.id)
+  this.notifySubscribers();
+  this.saveData();
+  }
   
  public getEntries():Entry[] {  
   let entriesClone = JSON.parse(JSON.stringify(this.entries));
@@ -113,6 +138,17 @@ public getEntryByID(id: number): Entry {
   return undefined;
 }
 
+public getTaskByID(id: number): Task {
+  console.log(this.activeEntry)
+  for (let e of this.activeEntry.tasks) {
+    if (e.id === id) {
+      let clone = JSON.parse(JSON.stringify(e));
+      return clone;
+    }
+  }
+  return undefined;
+}
+
 public updateEntry(id: number, newEntry: Entry): void {
   let entryToUpdate: Entry = this.findEntryByID(id);
   entryToUpdate.title = newEntry.title;
@@ -125,6 +161,19 @@ public updateEntry(id: number, newEntry: Entry): void {
   this.saveData();
 }
 
+// public updateTask(id: number, newTask: Task): void {
+//   let taskToUpdate: Task = this.findTaskByID(id)
+//   taskToUpdate.title = newTask.title;
+//   taskToUpdate.notes = newTask.notes;
+//   taskToUpdate.schedule = newTask.schedule;
+//   taskToUpdate.deadline = newTask.deadline;
+
+//   this.notifySubscribers();
+//   this.saveData();
+// }
+
+
+
 private findEntryByID(id: number): Entry {
   for (let e of this.entries) {
     if (e.id === id) {
@@ -133,6 +182,16 @@ private findEntryByID(id: number): Entry {
   }
   return undefined;
 }
+
+private findTaskByID(id: number): Task {
+  for (let e of this.activeEntry.tasks) {
+    if (e.id === id) {
+      return e;
+    }
+  }
+  return undefined;
+}
+
 
 public removeEntry(id: number): void {
   let listRef = this.db.ref('/allEntry');

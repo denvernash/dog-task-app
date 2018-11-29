@@ -11,8 +11,9 @@ export class Entry {
 export class Task {
     id: number;
     title: string;
-    due: string;
-    recur: string;
+    notes: string;
+    deadline: string;
+    schedule: string;
     complete: boolean;
 
 }
