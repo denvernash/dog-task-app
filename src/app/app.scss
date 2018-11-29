@@ -14,3 +14,36 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+
+
+.logo {
+    display: inline-block;
+    text-align: center;
+    width: 70%;
+    margin: 0;
+    max-height: 46px;
+    
+  }
+.logo img {
+    // border: thin silver solid;
+    position: absolute;
+    bottom: 20%;
+    left: 45%;
+    margin: auto;
+    width: 40px;
+    padding: .3em;
+}
+.logo_title {
+    position: absolute;
+    bottom: 0%;
+    left: 45%;
+    
+}
+
+  .bar {
+    // border: thin silver solid;
+    display: inline-block;
+    padding: .3em;
+  }
