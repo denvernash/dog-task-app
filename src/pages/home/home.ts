@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Entry } from '../../models/entry';
+import { Pet } from '../../models/entry';
 import { EntryDetailPage } from '../entry-detail/entry-detail';
 import { TaskPage } from '../task/task';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
@@ -11,7 +11,7 @@ import { EntryDataServiceProvider } from '../../providers/entry-data-service/ent
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public entries: Entry[] = [];
+  public entries: Pet[] = [];
 
   
   constructor(public navCtrl: NavController,
@@ -28,7 +28,7 @@ export class HomePage {
           }
         }
 
-      this.entries.sort((a: Entry, b: Entry) => {
+      this.entries.sort((a: Pet, b: Pet) => {
         return a.timestamp.getTime() - b.timestamp.getTime()
       }).reverse();
       console.log(this.entries);
@@ -45,18 +45,18 @@ export class HomePage {
   }
 
 
-private editEntry(entryID: number) {
-  console.log("editing entry ", entryID);
-  this.navCtrl.push(EntryDetailPage, {"entryID": entryID});
+private editEntry(petID: number) {
+  console.log("editing entry ", petID);
+  this.navCtrl.push(EntryDetailPage, {"entryID": petID});
 }
 
-private deleteEntry(entryID: number) {
-  this.entryDataService.removeEntry(entryID)
-  console.log('deleting entry', entryID)
+private deleteEntry(petID: number) {
+  this.entryDataService.removeEntry(petID)
+  console.log('deleting entry', petID)
 }
 
-private taskOverview(entryID: number) {
-  this.navCtrl.push(TaskPage, {"entryID": entryID});
+private taskOverview(petID: number) {
+  this.navCtrl.push(TaskPage, {"entryID": petID});
   console.log('hello')
 }
 

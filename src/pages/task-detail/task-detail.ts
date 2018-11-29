@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Entry, Task } from '../../models/entry';
+import { Pet, Task } from '../../models/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 
 
@@ -13,7 +13,7 @@ import { EntryDataServiceProvider } from '../../providers/entry-data-service/ent
 })
 export class TaskDetailPage {
 
-  private entry: Entry;
+  private entry: Pet;
   private task: Task;
   
 
@@ -22,10 +22,10 @@ export class TaskDetailPage {
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider) {
 
-    let entryID = this.navParams.get("entryID");
+    let petID = this.navParams.get("entryID");
     let taskID = this.navParams.get('taskID')
     console.log("here's what i've got for my id", taskID)
-    this.entry = this.entryDataService.getEntryByID(entryID);
+    this.entry = this.entryDataService.getEntryByID(petID);
   
 
 
@@ -38,8 +38,8 @@ export class TaskDetailPage {
     this.task.deadline = ''
     this.task.schedule = ''
   } else {
-    console.log("Here's my id's", taskID, entryID)
-    this.task = this.entryDataService.getTaskByID(taskID);
+    console.log("Here's my id's", taskID, petID)
+    // this.task = this.entryDataService.getTaskByID(taskID);
   
   
   

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Entry, Task } from '../../models/entry';
+import { Pet, Task } from '../../models/entry';
 import { EntryDetailPage } from '../entry-detail/entry-detail';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { TaskDetailPage } from '../task-detail/task-detail';
@@ -14,7 +14,7 @@ import { TaskDetailPage } from '../task-detail/task-detail';
 export class TaskPage {
 
   public tasklist: Task[];
-  private entry: Entry;
+  private entry: Pet;
   private createDate: Date;
 
   constructor(public navCtrl: NavController, 
@@ -22,21 +22,21 @@ export class TaskPage {
     public entryDataService: EntryDataServiceProvider) {
 
       console.log('Constructor')
-      let entryID = this.navParams.get("entryID");
-      let entry = this.entryDataService.getEntryByID(entryID);
+      let petID = this.navParams.get("entryID");
+      let entry = this.entryDataService.getEntryByID(petID);
       this.entryDataService.activeEntry = entry;
-      console.log("Here's the id in the constructor for the entry", entryID)
+      console.log("Here's the id in the constructor for the entry", petID)
   
-    if (entryID === undefined) {
-      this.entry = new Entry();
+    if (petID === undefined) {
+      this.entry = new Pet();
       this.entry.title = "";
       this.entry.text = "";
       this.entry.id = -1; // placeholder for 'temporary' entry
-      this.entry.tasks = [];
+      
       
      
     } else {
-    this.entry = this.entryDataService.getEntryByID(entryID);
+    this.entry = this.entryDataService.getEntryByID(petID);
     if (typeof this.entry.timestamp === 'string') {
       this.createDate = new Date(this.entry.timestamp);
     } else { this.createDate = this.entry.timestamp }
@@ -46,7 +46,7 @@ export class TaskPage {
   }
 
 ngOnInit() {
-// this.tasklist = this.entry.tasks
+
 
 this.getFakeTasks()
 console.log('nginited')
@@ -72,14 +72,14 @@ private getFakeTasks() {
   this.tasklist = fakelist;
 }
 
-private editTask(taskID: number, entryID: number) {
-console.log("editing entry ", entryID);
-this.navCtrl.push(TaskDetailPage, {"entryID": entryID, "taskID":taskID});
+private editTask(taskID: number, petID: number) {
+console.log("editing entry ", petID);
+this.navCtrl.push(TaskDetailPage, {"entryID": petID, "taskID":taskID});
 }
 
-private deleteEntry(entryID: number) {
-this.entryDataService.removeEntry(entryID)
-console.log('deleting entry', entryID)
+private deleteEntry(petID: number) {
+this.entryDataService.removeEntry(petID)
+console.log('deleting entry', petID)
 }
 
 

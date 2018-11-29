@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Entry } from '../../models/entry';
+import { Pet } from '../../models/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
@@ -14,7 +14,7 @@ const SPINNER_IMAGE: string = "/assets/imgs/spinner.gif";
 })
 export class EntryDetailPage {
 
-  private entry: Entry;
+  private entry: Pet;
   private createDate: Date;
   private image = PLACEHOLDER_IMAGE;
 
@@ -27,12 +27,12 @@ export class EntryDetailPage {
     let entry = this.entryDataService.getEntryByID(entryID);
 
   if (entryID === undefined) {
-    this.entry = new Entry();
+    this.entry = new Pet();
     this.entry.title = "";
     this.entry.text = "";
     this.entry.id = -1; // placeholder for 'temporary' entry
     this.entry.image = PLACEHOLDER_IMAGE;
-    this.entry.tasks = []
+
   } else {
   this.entry = this.entryDataService.getEntryByID(entryID);
   if (typeof this.entry.timestamp === 'string') {
