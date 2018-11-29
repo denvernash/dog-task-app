@@ -29,7 +29,7 @@
   
       <ion-item  *ngFor="let item of tasklist">
         <ion-label>HI {{item.title}}</ion-label>
-        <button ion-button item-end (click)="editTask(entry.id)"> 
+        <button ion-button item-end (click)="editTask(item.id, entry.id)"> 
             <ion-icon name="create"></ion-icon>Edit
           </button>
       </ion-item>
@@ -39,6 +39,6 @@
 </ion-content>
 <ion-footer>
     <ion-item>
-        <button ion-button full (click)="addEntry()">Add Task</button>
+        <button ion-button full (click)="addEntry(entry.id)">Add Task</button>
       </ion-item>
 </ion-footer>

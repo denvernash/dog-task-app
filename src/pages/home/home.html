@@ -32,7 +32,7 @@
 
     <ion-item *ngFor="let entry of entries">
       
-        <ion-label (click)="taskOverview(entry.key)">
+        <ion-label (click)="taskOverview(entry.id)">
         <div class= 'card card-1'>
         <img class="diaryimage" [src]="entry.image" />
         </div>

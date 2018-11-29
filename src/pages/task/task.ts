@@ -24,7 +24,8 @@ export class TaskPage {
       console.log('Constructor')
       let entryID = this.navParams.get("entryID");
       let entry = this.entryDataService.getEntryByID(entryID);
-      console.log(entryID)
+      this.entryDataService.activeEntry = entry;
+      console.log("Here's the id in the constructor for the entry", entryID)
   
     if (entryID === undefined) {
       this.entry = new Entry();
@@ -52,24 +53,28 @@ console.log('nginited')
 
 }
 
-private addEntry() {
-this.navCtrl.push(TaskDetailPage);
+private addEntry(entryID) {
+  console.log("passed to add entry", entryID)
+this.navCtrl.push(TaskDetailPage, {"entryID": entryID});
 }
 
 private getFakeTasks() {
   let it1 = new Task();
   it1.title = "FAKE TASK 1";
+  it1.id = 100
   let it2 = new Task();
   it2.title = "FAKE TASK 2";
+  it2.id = 200
   let it3 = new Task();
   it3.title = "FAKE TASK 3";
+  it3.id = 300
   let fakelist = [it1, it2, it3];
   this.tasklist = fakelist;
 }
 
-private editTask(entryID: number) {
+private editTask(taskID: number, entryID: number) {
 console.log("editing entry ", entryID);
-this.navCtrl.push(TaskDetailPage, {"entryID": entryID});
+this.navCtrl.push(TaskDetailPage, {"entryID": entryID, "taskID":taskID});
 }
 
 private deleteEntry(entryID: number) {

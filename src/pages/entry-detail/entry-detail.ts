@@ -32,6 +32,7 @@ export class EntryDetailPage {
     this.entry.text = "";
     this.entry.id = -1; // placeholder for 'temporary' entry
     this.entry.image = PLACEHOLDER_IMAGE;
+    this.entry.tasks = []
   } else {
   this.entry = this.entryDataService.getEntryByID(entryID);
   if (typeof this.entry.timestamp === 'string') {
