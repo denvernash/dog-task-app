@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Entry, Task } from '../../models/entry';
+import { Entry } from '../../models/entry';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { Storage } from '@ionic/storage';
 import { firebaseConfig } from '../../models/firefile';
 import firebase from 'firebase';
 import { Checklist } from '../../models/checklist';
+import { Task } from '../../models/entry';
 
 
 @Injectable()
@@ -233,7 +234,9 @@ public removeEntry(id: number): void {
 
     this.checklists.push({
       id: this.generateSlug(data.name),
-      title: data.name,
+      title: data.title,
+      schedule: data.schedule,
+      deadline: data.deadline,
       items: []
     });
 
@@ -309,15 +312,7 @@ public removeEntry(id: number): void {
   //Understand the purpose of this but not the implementation.
   generateSlug(title): string {
 
-    let slug = title.toLowerCase().replace(/\s+/g, '-');
-
-    let exists = this.checklists.filter((checklist) => {
-      return checklist.id.substring(0, slug.length) === slug;
-    });
-
-    if(exists.length > 0){
-      slug = slug + exists.length.toString();
-    }
+    let slug = 'slug';
 
     return slug;
 

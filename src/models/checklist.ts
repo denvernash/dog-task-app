@@ -1,6 +1,8 @@
 export class Checklist {
     id: string;
     title: string;
+    deadline: string;
+    schedule: string;
     items: ChecklistItem[];
 }
 

@@ -18,15 +18,26 @@ export class CreatePage {
     console.log('ionViewDidLoad CreatePage');
   }
   
-  addChecklist(data): void {
+  addChecklistItem(data): void {
 
     let prompt= this.alertCtrl.create({
-      title: 'New Checklist',
-      message: 'Enter the name of your new checklist below:',
+      title: 'New Checklist Item',
+      message: 'Enter your new checklist item name, frequency, and deadline below:',
       inputs: [
         {
           type: 'text',
-          name: 'name'
+          name: 'title',
+          placeholder: 'Title'
+        },
+        {
+          type: 'text',
+          name: 'schedule',
+          placeholder: 'Schedule' /* need to constrain options */
+        },
+        {
+          type: 'text',
+          name: 'deadline',
+          placeholder: 'Deadline' /* need to constrain options */
         }
       ],
       buttons: [
@@ -47,15 +58,19 @@ export class CreatePage {
   }
 
 
-  renameChecklist(checklist): void {
+  editChecklistItem(task): void {
 
     let prompt= this.alertCtrl.create({
-      title: 'Rename Checklist',
-      message: 'Enter the new name of this checklist below:',
+      title: 'Edit Checklist',
+      message: 'Edit this however you want',
       inputs: [
         {
           type: 'text',
-          name: 'name'
+          name: 'schedule'
+        },
+        {
+          type: 'text',
+          name: 'deadline'
         }
       ],
       buttons: [
@@ -65,7 +80,7 @@ export class CreatePage {
         {
           text: 'Save',
           handler: (data) => {
-            this.dataService.renameChecklist(checklist, data);
+            this.dataService.renameChecklist(task, data);
 
           }
         }
@@ -76,9 +91,9 @@ export class CreatePage {
 
   }
 
-  removeChecklist(checklist): void{
+  removeChecklistItem(task): void{
 
-    this.dataService.removeChecklist(checklist);
+    this.dataService.removeChecklist(task);
 
   }
 }

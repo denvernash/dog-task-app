@@ -23,20 +23,42 @@
         </ion-col>
       </ion-row>
     </ion-grid> -->
-  
+       
+    
+    
+    <!-- WE WILL USE THIS AFTER CLARIFYING STUFF
     <ion-list id= 'peeps'>
-        
-  
-      <ion-item  *ngFor="let item of tasklist">
+<ion-item  *ngFor="let item of tasklist">
         <ion-label>HI {{item.title}}</ion-label>
         <button ion-button item-end (click)="editTask(item.id, entry.id)"> 
             <ion-icon name="create"></ion-icon>Edit
           </button>
       </ion-item>
+    </ion-list>-->
+
+    <ion-list lines="none" *ngFor="let checklist of entryDataService.checklists">
+    
+    
+      <ion-item>
+          <ion-item>Task: {{checklist.title}}</ion-item>
+          <ion-item>Schedule: {{checklist.schedule}}</ion-item>
+          <ion-item>Deadline: {{checklist.deadline}}</ion-item>
+          <button ion-button item-end (click)="editTask(checklist.id, entry.id)"> 
+              <ion-icon name="create"></ion-icon>Edit
+            </button>
+        </ion-item>
+       
+       
+          <!--<ion-label>{{checklist.title}} , {{checklist.schedule}}, {{checklist.deadline}}</ion-label>
+        </ion-item>
+      <ion-item (click)="renameChecklistItem(checklist)"><ion-icon name="clipboard"></ion-icon></ion-item>
+      <ion-item (click)="removeChecklistItem(checklist)"><ion-icon name="trash"></ion-icon></ion-item>-->
+  
     </ion-list>
 
 
 </ion-content>
+
 <ion-footer>
     <ion-item>
         <button ion-button full (click)="addEntry(entry.id)">Add Task</button>
