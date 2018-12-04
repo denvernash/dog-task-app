@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Pet } from '../../models/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { HomePage } from '../home/home'
 
 const PLACEHOLDER_IMAGE: string = "/assets/imgs/placeholder.png";
 const SPINNER_IMAGE: string = "/assets/imgs/spinner.gif";
@@ -50,11 +51,18 @@ private saveEntry() {
   } else {
     this.entryDataService.updateEntry(this.entry.id, this.entry);
   }
-  this.navCtrl.pop();
+    if (this.navCtrl.canGoBack()) {
+      this.navCtrl.pop()
+    }
+    else{
+      this.navCtrl.setRoot(HomePage);
+    }
+    
+
 }
 
 public cancelEntry() {
-  this.navCtrl.pop();
+  this.navCtrl.pop()
 }
 
   ionViewDidLoad() {
