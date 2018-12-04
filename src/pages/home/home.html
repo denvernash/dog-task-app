@@ -31,7 +31,7 @@
     </ion-row>
   </ion-grid> -->
 
-  <ion-list id= 'peeps'>
+  <!-- <ion-list id= 'peeps'>
       
 
     <ion-item *ngFor="let entry of entries">
@@ -55,7 +55,7 @@
             <ion-icon name="close-circle"></ion-icon>
           </button>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
   <ion-card *ngFor="let entry of entries">
       
@@ -72,9 +72,15 @@
       <h2>{{entry.text}}</h2>
     </ion-item>
     <ion-item>
-        {{entry.timestamp}}
+        {{entry.timestamp | date:'short'}}
     </ion-item>
     </ion-list>
+    <ion-buttons item-end style= 'float: right;'>
+      <button color='primary' ion-button icon-only clear icon-end (click)="deleteEntry(entry.id)">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    <button small color='primary' ion-button outline (click)="editEntry(entry.id)">Edit</button>
+  </ion-buttons>
   </ion-card-content>
 
   </ion-card>
@@ -84,7 +90,7 @@
 
 </ion-content>
 <ion-footer>
-    <ion-item>
-        <button ion-button full (click)="addEntry()">Add Pet</button>
-      </ion-item>
+  <ion-fab right bottom>
+    <button ion-fab color='primary' (click)="addEntry()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-footer>

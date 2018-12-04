@@ -31,12 +31,12 @@
 
   <ion-list>
     <ion-item>
-      <button ion-button (click)="cancelEntry()">Cancel </button>
+      <button ion-button color='danger' (click)="cancelEntry()">Cancel </button>
       <button ion-button (click)="saveEntry()">Save</button>
     </ion-item>
 
     <ion-item no-lines>
-      <p>Created: {{createDate}}</p>
+      <p>Created: {{createDate | date:'short'}}</p>
     </ion-item>
 
   </ion-list>
