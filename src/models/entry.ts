@@ -16,6 +16,7 @@ export class Task {
     schedule: string;
     complete: boolean;
     completed_date: Date;
+    time: number;
 
 }
 
@@ -24,7 +25,9 @@ export class Day {
     tasks: Task[];
     name: string;
     start_date: Date;
+    start_time: number;
     end_date: Date;
+    end_time: number;
 }
 
 export class Photo {
@@ -33,5 +36,6 @@ export class Photo {
     filename: string;
     title: string;
     timestamp: Date;
+    time: number;
     
 }

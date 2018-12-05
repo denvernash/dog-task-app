@@ -13,16 +13,15 @@
 
 
 <ion-content padding>
-  <ion-list lines="none" *ngFor="let checklist of dataService.checklists">
+  <ion-list lines="none" *ngFor="let checklist of dataService.tasks">
     
     
     <ion-item>
       <ion-label>{{checklist.title}} , {{checklist.schedule}}, {{checklist.deadline}}</ion-label>
       </ion-item>
-    <ion-item (click)="renameChecklistItem(checklist)"><ion-icon name="clipboard"></ion-icon></ion-item>
-    <ion-item (click)="removeChecklistItem(checklist)"><ion-icon name="trash"></ion-icon></ion-item>
+    
 
   </ion-list>
-  <button ion-button (click)="addChecklistItem()">Default</button>
+  <button ion-button (click)="addChecklistItem()">Add</button>
 
 </ion-content>

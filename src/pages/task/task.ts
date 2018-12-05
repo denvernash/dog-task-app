@@ -17,14 +17,16 @@ export class TaskPage {
   private entry: Pet;
   private createDate: Date;
 
+
+
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider) {
 
       console.log('Constructor')
-      let petID = this.navParams.get("entryID");
-      let entry = this.entryDataService.getEntryByID(petID);
-      this.entryDataService.activeEntry = entry;
+      let petID = this.navParams.get("petID");
+      
+      
       console.log("Here's the id in the constructor for the entry", petID)
   
     if (petID === undefined) {
@@ -37,6 +39,7 @@ export class TaskPage {
      
     } else {
     this.entry = this.entryDataService.getEntryByID(petID);
+    this.entryDataService.activeEntryID = this.entry.id;
     if (typeof this.entry.timestamp === 'string') {
       this.createDate = new Date(this.entry.timestamp);
     } else { this.createDate = this.entry.timestamp }
@@ -46,40 +49,29 @@ export class TaskPage {
   }
 
 ngOnInit() {
-
-
-this.getFakeTasks()
-console.log('nginited')
-
+console.log(this.entryDataService.tasks)
 }
 
-private addEntry(entryID) {
-  console.log("passed to add entry", entryID)
-this.navCtrl.push(TaskDetailPage, {"entryID": entryID});
+
+private addEntry() {
+this.navCtrl.push(TaskDetailPage);
 }
 
-private getFakeTasks() {
-  let it1 = new Task();
-  it1.title = "FAKE TASK 1";
-  it1.id = 100
-  let it2 = new Task();
-  it2.title = "FAKE TASK 2";
-  it2.id = 200
-  let it3 = new Task();
-  it3.title = "FAKE TASK 3";
-  it3.id = 300
-  let fakelist = [it1, it2, it3];
-  this.tasklist = fakelist;
-}
+
 
 private editTask(taskID: number, petID: number) {
 console.log("editing entry ", petID);
-this.navCtrl.push(TaskDetailPage, {"entryID": petID, "taskID":taskID});
+this.navCtrl.push(TaskDetailPage, {"taskID":taskID});
 }
 
 private deleteEntry(petID: number) {
 this.entryDataService.removeEntry(petID)
 console.log('deleting entry', petID)
+}
+
+
+private toggleComplete(id) {
+  this.entryDataService.updateTaskTime(id);
 }
 
 

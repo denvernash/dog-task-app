@@ -10,51 +10,35 @@
 </ion-header>
 
 <ion-content padding>
-    <h1>Pet Name: {{entry.title}}</h1>
+    <h1>Pet Name: </h1>
 
   
-    <!-- <ion-grid>
-      <ion-row>
-        <ion-col col-33 *ngFor="let entry of entries">
-          <div class= 'card card-1'>
-            <img [src]= 'entry.image' alt="Person">
-            <p>{{entry.title}}</p>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid> -->
-       
-    
-    
-    <!-- WE WILL USE THIS AFTER CLARIFYING STUFF
-    <ion-list id= 'peeps'>
-<ion-item  *ngFor="let item of tasklist">
-        <ion-label>HI {{item.title}}</ion-label>
-        <button ion-button item-end (click)="editTask(item.id, entry.id)"> 
-            <ion-icon name="create"></ion-icon>Edit
-          </button>
-      </ion-item>
-    </ion-list>-->
 
-    <ion-list lines="none" *ngFor="let checklist of entryDataService.checklists">
-    
-    
-      <ion-item>
-          <ion-item>Task: {{checklist.title}}</ion-item>
-          <ion-item>Schedule: {{checklist.schedule}}</ion-item>
-          <ion-item>Deadline: {{checklist.deadline}}</ion-item>
-          <button ion-button item-end (click)="editTask(checklist.id, entry.id)"> 
+
+    <div *ngFor="let task of entryDataService.tasks">
+    <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+          <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
+      </ion-avatar>
+      <h2><strong>{{entryDataService.getEntryByID(task.pet_id).title}}</strong></h2>
+      <p>{{entryDataService.getEntryByID(task.pet_id).complete_date | date:'short'}}</p>
+    </ion-item>
+
+      
+          <ion-item>Task: {{task.title}}</ion-item>
+          <ion-item>Schedule: {{task.schedule}}</ion-item>
+          <ion-item>Deadline: {{task.deadline}}</ion-item>
+          <ion-checkbox checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
+          <button ion-button item-end (click)="editTask(task.id)"> 
               <ion-icon name="create"></ion-icon>Edit
             </button>
-        </ion-item>
+      </ion-card>
+    </div>
        
-       
-          <!--<ion-label>{{checklist.title}} , {{checklist.schedule}}, {{checklist.deadline}}</ion-label>
-        </ion-item>
-      <ion-item (click)="renameChecklistItem(checklist)"><ion-icon name="clipboard"></ion-icon></ion-item>
-      <ion-item (click)="removeChecklistItem(checklist)"><ion-icon name="trash"></ion-icon></ion-item>-->
-  
-    </ion-list>
+
+
+
 
 
 </ion-content>

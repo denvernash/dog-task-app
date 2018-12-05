@@ -19,6 +19,7 @@ export class HomePage {
 
       this.entryDataService.getObservable().subscribe(update => {
         this.entries = entryDataService.getEntries();
+        console.log(this.entries)
 
 
         for (let e of this.entries) {
@@ -56,7 +57,7 @@ private deleteEntry(petID: number) {
 }
 
 private taskOverview(petID: number) {
-  this.navCtrl.push(TaskPage, {"entryID": petID});
+  this.navCtrl.push(TaskPage, {"petID": petID});
   console.log('hello')
 }
 
