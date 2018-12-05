@@ -13,19 +13,25 @@ import { EntryDataServiceProvider } from '../../providers/entry-data-service/ent
 })
 export class TaskDetailPage {
 
-  private entry: Pet;
+ 
   private task: Task;
-  
+  petID: number;
 
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider) {
 
-    let petID = this.navParams.get("entryID");
+    let pet_id = this.navParams.get("petID");
     let taskID = this.navParams.get('taskID')
+    if (pet_id === undefined) {
+      this.petID = entryDataService.activeEntryID;
+    }
+    else {
+    this.petID = pet_id
+    
     console.log("here's what i've got for my id", taskID)
-    this.entry = this.entryDataService.getEntryByID(petID);
+    }
   
 
 
@@ -34,12 +40,14 @@ export class TaskDetailPage {
     this.task.title = "";
     this.task.notes = "";
     this.task.id = -1; // placeholder for 'temporary' entry
+    this.task.pet_id = this.petID;
     console.log('giving taskid -1')
     this.task.deadline = ''
     this.task.schedule = ''
   } else {
-    console.log("Here's my id's", taskID, petID)
-    // this.task = this.entryDataService.getTaskByID(taskID);
+    console.log("Here's my id's", taskID, pet_id)
+    
+    this.task = this.entryDataService.getTaskByID(taskID);
   
   
   
@@ -51,10 +59,12 @@ export class TaskDetailPage {
 private saveEntry() {
   
   if (this.task.id === -1) { 
-    this.entryDataService.addTask(this.entry.id, this.task);
+    this.entryDataService.addTask(this.task);
+
+    
   } else {
-    // this.entryDataService.updateEntry(this.entry.id, this.entry);
-    console.log("updating entry")
+    this.entryDataService.updateTask(this.task);
+ 
   }
   this.navCtrl.pop();
 }

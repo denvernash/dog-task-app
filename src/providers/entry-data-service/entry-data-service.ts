@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Pet, Task } from '../../models/entry';
+import { Pet, Task, Day, Photo } from '../../models/entry';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { Storage } from '@ionic/storage';
 import { firebaseConfig } from '../../models/firefile';
 import firebase from 'firebase';
-import { Checklist } from '../../models/checklist';
+
 
 
 
@@ -15,11 +15,14 @@ export class EntryDataServiceProvider {
 
   private db: any;
   private entries:Pet[] = [];
-  public activeEntry: Pet;
-  private serviceObserver: Observer<Pet[]>;
-  private clientObservable: Observable<Pet[]>;
+  public activeEntryID: number;
+  private PetserviceObserver: Observer<Pet[]>;
+  private PetclientObservable: Observable<Pet[]>;
+  private TaskserviceObserver: Observer<Task[]>;
+  private TaskclientObservable: Observable<Task[]>;
   private nextID: number = 0;
-  public checklists: Checklist[] = [];
+  public tasks: Task[] = [];
+  public days: Day[] = [];
   public loaded: boolean = false;
 
   constructor(private storage: Storage) { 
@@ -27,11 +30,15 @@ export class EntryDataServiceProvider {
     firebase.initializeApp(firebaseConfig);
     this.db = firebase.database();
 
-    this.clientObservable = Observable.create(observerThatWasCreated => {
-      this.serviceObserver = observerThatWasCreated;
+    this.PetclientObservable = Observable.create(observerThatWasCreated => {
+      this.PetserviceObserver = observerThatWasCreated;
+    });
+    this.TaskclientObservable = Observable.create(createdObserver => {
+      this.TaskserviceObserver = createdObserver;
     });
 
-    let dataRef = this.db.ref('/allEntry');
+    // loading pets
+    let dataRef = this.db.ref('/allEntry/pets');
     dataRef.on('value', snapshot => {
     this.entries = []; //start with a blank list
     snapshot.forEach(childSnapshot => {
@@ -42,24 +49,65 @@ export class EntryDataServiceProvider {
       newbie.image = childSnapshot.val().image;
       newbie.time = childSnapshot.val().time;
       newbie.timestamp = new Date(newbie.time);
-      this.activeEntry = newbie;
+      this.activeEntryID = newbie.id;
       this.entries.push(newbie);
     
      });
      this.notifySubscribers(); 
     });
 
+
+    // loading tasks
+    let taskRef = this.db.ref('/allEntry/tasks')
+    taskRef.on('value', snapshot => {
+      this.tasks = [];
+    if(snapshot.exists()) { 
+      snapshot.forEach(childSnapshot => {
+        let newbie = new Task;
+        newbie.id = childSnapshot.val().id;
+        newbie.pet_id = childSnapshot.val().pet_id;
+        newbie.title = childSnapshot.val().title;
+        newbie.notes = childSnapshot.val().notes;
+        newbie.deadline = childSnapshot.val().deadline;
+        newbie.schedule = childSnapshot.val().schedule;
+        newbie.complete = childSnapshot.val().complete;
+        if (newbie.complete) {
+          console.log(".complete true, getting time")
+        newbie.time = childSnapshot.val().time;
+        newbie.completed_date = new Date(newbie.time);
+        } else {
+        console.log('assigning time to null')
+        console.log(newbie)
+        newbie.time = null;
+        newbie.completed_date = null;
+        
+        }
+        this.tasks.push(newbie);
+
+      
+       });
+       this.notifySubscribers(); 
+      } else {
+        console.log("DOESN'T EXIST")
+      };
+  });
+
+
+    // geting Unique ID
     let Ref = this.db.ref('/lastID');
     Ref.on('value', snapshot => {
       if(snapshot.exists()) { 
         this.nextID = (snapshot.val().nextID)+1
-    //  console.log("HERES THE ID FROM STORAGE", this.nextID)
      this.notifySubscribers(); }
     });
 
 
 
   }
+
+
+
+
 
   private getUniqueID(): number {
     let uniqueID = this.nextID++;
@@ -71,36 +119,38 @@ export class EntryDataServiceProvider {
 
 public addEntry(entry:Pet) {
   entry.id = this.getUniqueID();
-  // console.log("HERES YOUR ID", entry.id)
   entry.timestamp = new Date();
   entry.time = entry.timestamp.getTime();
-  let it1 = new Task();
-  it1.title = "FAKE TASK 1";
-  it1.id = 100
-  it1.notes = "NONE"
-  let it2 = new Task();
-  it2.title = "FAKE TASK 2";
-  it2.id = 200
-  it2.schedule = "MONTHLY"
-  let it3 = new Task();
-  it3.title = "FAKE TASK 3";
-  it3.id = 300
-  it3.deadline = '3pm'
-  // entry.tasks = [it1, it2, it3];
   this.entries.push(entry)
   this.notifySubscribers();
   this.saveData();
   
 }
 
-public addTask(id: number, newTask: Task) {
-  let foundEntry: Pet = this.findEntryByID(id)
+public updateTaskTime(id) {
+let task = this.findTaskByID(id);
+  if (task.complete) {
+    console.log("THIS IS TRUE, ASSIGNING NEW DATE")
+    task.completed_date = new Date();
+    task.time = task.completed_date.getTime();
+  }
+  console.log(task.time)
+  this.notifySubscribers();
+  console.log(task.time)
+  console.log("THIS IS WHERE IT BREAKS")
+  this.saveData();
+  console.log("DID IT DELETE THE TIME", task.time)
+}
+
+
+
+public addTask(newTask: Task) {
   newTask.id = this.getUniqueID() + 1000;
   newTask.complete = false;
-
-  // foundEntry.tasks.push(newTask);
-  // console.log("Just pushed task", newTask.id, "to", foundEntry.id)
-  this.notifySubscribers();
+  newTask.completed_date = null;
+  newTask.time = null;
+  this.tasks.push(newTask);
+  this.notifySubscribers;
   this.saveData();
   }
   
@@ -108,23 +158,45 @@ public addTask(id: number, newTask: Task) {
   let entriesClone = JSON.parse(JSON.stringify(this.entries));
   return entriesClone;
 }
+public getTasks(): Task[] {
+  let tasksClone = JSON.parse(JSON.stringify(this.tasks));
+  return tasksClone;
+}
 
 public getObservable(): Observable<Pet[]> {
-  return this.clientObservable;
+  return this.PetclientObservable;
 }
 
 
 private notifySubscribers(): void {
-  this.serviceObserver.next(undefined);
+  this.PetserviceObserver.next(undefined);
+}
+private notifyAgain(): void {
+  this.TaskserviceObserver.next(undefined);
 }
 
 private saveData(): void {
   
-  let listRef = this.db.ref('/allEntry');
+  // saving pets
+  let listRef = this.db.ref('/allEntry/pets');
   for (let entry of this.entries) {
   listRef.child(entry.id).set(entry);
 }
+// saving tasks
+let listRef2 = this.db.ref('/allEntry/tasks');
+  for (let task of this.tasks) {
+  console.log("did it delete the time?", task.id, task.time)
+  listRef2.child(task.id).set(task);
+  }
+
+// saving days
+let listRef3 = this.db.ref('/allEntry/days');
+for (let day of this.days) {
+listRef3.child(day.id).set(day);
+  }
+
 }
+
 
 
 
@@ -138,19 +210,19 @@ public getEntryByID(id: number): Pet {
   return undefined;
 }
 
-// public getTaskByID(id: number): Task {
-//   console.log(this.activeEntry)
-//   for (let e of this.activeEntry.tasks) {
-//     if (e.id === id) {
-//       let clone = JSON.parse(JSON.stringify(e));
-//       return clone;
-//     }
-//   }
-//   return undefined;
-// }
+public getTaskByID(id: number): Task {
+  for (let e of this.tasks) {
+    if (e.id === id) {
+      let clone = JSON.parse(JSON.stringify(e));
+      return clone;
+    }
+  }
+  return undefined;
+}
 
 public updateEntry(id: number, newEntry: Pet): void {
   let entryToUpdate: Pet = this.findEntryByID(id);
+  console.log(id, newEntry.title)
   entryToUpdate.title = newEntry.title;
   entryToUpdate.text = newEntry.text;
   entryToUpdate.timestamp = new Date();
@@ -161,16 +233,20 @@ public updateEntry(id: number, newEntry: Pet): void {
   this.saveData();
 }
 
-// public updateTask(id: number, newTask: Task): void {
-//   let taskToUpdate: Task = this.findTaskByID(id)
-//   taskToUpdate.title = newTask.title;
-//   taskToUpdate.notes = newTask.notes;
-//   taskToUpdate.schedule = newTask.schedule;
-//   taskToUpdate.deadline = newTask.deadline;
-
-//   this.notifySubscribers();
-//   this.saveData();
-// }
+public updateTask(newTask: Task): void {
+  let taskToUpdate: Task = this.findTaskByID(newTask.id)
+  taskToUpdate.title = newTask.title;
+  taskToUpdate.notes = newTask.notes;
+  taskToUpdate.schedule = newTask.schedule;
+  taskToUpdate.deadline = newTask.deadline;
+  taskToUpdate.complete = newTask.complete;
+  taskToUpdate.completed_date = newTask.completed_date;
+  taskToUpdate.time = newTask.time;
+  console.log(newTask)
+  
+  this.notifySubscribers();
+  this.saveData();
+}
 
 
 
@@ -183,18 +259,18 @@ private findEntryByID(id: number): Pet {
   return undefined;
 }
 
-// private findTaskByID(id: number): Task {
-//   for (let e of this.activeEntry.tasks) {
-//     if (e.id === id) {
-//       return e;
-//     }
-//   }
-//   return undefined;
-// }
+private findTaskByID(id: number): Task {
+  for (let e of this.tasks) {
+    if (e.id === id) {
+      return e;
+    }
+  }
+  return undefined;
+}
 
 
 public removeEntry(id: number): void {
-  let listRef = this.db.ref('/allEntry');
+  let listRef = this.db.ref('/allEntry/pets');
   for (let i=0; i < this.entries.length; i++) {
     console.log(i)
     let iID = this.entries[i].id;
@@ -214,10 +290,10 @@ public removeEntry(id: number): void {
 
     return new Promise((resolve) => {
 
-      this.storage.get('checklists').then((checklists) => {
+      this.storage.get('tasks').then((tasks) => {
 
-        if(checklists != null){
-          this.checklists = checklists;
+        if(tasks != null){
+          this.tasks = tasks;
         }
 
         this.loaded = true;
@@ -231,81 +307,51 @@ public removeEntry(id: number): void {
 
   createChecklist(data): void {
 
-    this.checklists.push({
-      id: this.generateSlug(data.name),
+      this.tasks.push({
+      id: this.getUniqueID() + 1000,
+      pet_id: data.pet_id,
       title: data.title,
-      schedule: data.schedule,
+      notes: '',
       deadline: data.deadline,
-      items: []
+      schedule: data.schedule,
+      complete: false,
+      completed_date: null,
+      time: null
     });
-
+    this.notifySubscribers();
     this.save();
 
   }
 
-  renameChecklist(checklist, data): void {
+  renameChecklist(task, data): void {
 
-    let index = this.checklists.indexOf(checklist);
+    let index = this.tasks.indexOf(task);
 
     if(index > -1){
-      this.checklists[index].title = data.name;
+      this.tasks[index].title = data.name;
       this.save();
     }
 
   }
 
-  removeChecklist(checklist): void {
+  removeChecklist(task): void {
 
-    let index = this.checklists.indexOf(checklist);
+    let index = this.tasks.indexOf(task);
 
     if(index > -1){
-      this.checklists.splice(index, 1);
+      this.tasks.splice(index, 1);
       this.save();
     }
 
   }
   
-  getChecklist(id): Checklist {
-    return this.checklists.find(checklist => checklist.id === id);
-  }
-
-  addItem(checklistId, data): void {
-
-    this.getChecklist(checklistId).items.push({
-      title: data.name,
-      checked: false
-    });
-
-    this.save();
-
-  }
-
-  removeItem(checklist, item): void {
-
-    let index = checklist.items.indexOf(item);
-
-    if(index > -1){
-      checklist.items.splice(index, 1);
-      this.save()
-    }    
-
-  }
-
-  renameItem(item, data): void {
-
-    item.title = data.name;
-    this.save();
-
-  }
-
-  toggleItem(item): void {
-    item.checked = !item.checked;
-    this.save();
+  getChecklist(id): Task {
+    return this.tasks.find(task => task.id === id);
   }
 
 
   save(): void {
-    this.storage.set('checklists', this.checklists);
+    this.storage.set('tasks', this.tasks);
   }
 
   //Understand the purpose of this but not the implementation.
@@ -316,6 +362,13 @@ public removeEntry(id: number): void {
     return slug;
 
 
-}}
+}
+
+
+
+
+
+
+}
 
 

@@ -5,6 +5,7 @@ import { EntryDataServiceProvider } from '../../providers/entry-data-service/ent
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { HomePage } from '../home/home'
 
+
 const PLACEHOLDER_IMAGE: string = "/assets/imgs/placeholder.png";
 const SPINNER_IMAGE: string = "/assets/imgs/spinner.gif";
 
@@ -46,6 +47,10 @@ export class EntryDetailPage {
   }
 
 private saveEntry() {
+  if (this.entry.image === PLACEHOLDER_IMAGE) {
+    let rand = Math.floor(Math.random()*3)+1;
+    this.entry.image = "/assets/imgs/dog" + rand + '.jpg'
+  }
   if (this.entry.id === -1) { 
     this.entryDataService.addEntry(this.entry);
   } else {

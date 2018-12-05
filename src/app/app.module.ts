@@ -14,6 +14,7 @@ import { EntryDataServiceProvider } from '../providers/entry-data-service/entry-
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { NavController } from 'ionic-angular';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -29,6 +30,7 @@ import { NavController } from 'ionic-angular';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
