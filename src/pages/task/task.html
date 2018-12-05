@@ -15,8 +15,8 @@
   
 
 
-    <div *ngFor="let task of entryDataService.tasks">
-    <ion-card>
+
+    <ion-card *ngFor="let task of entryDataService.tasks">
     <ion-item>
       <ion-avatar item-start>
           <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
@@ -34,7 +34,7 @@
               <ion-icon name="create"></ion-icon>Edit
             </button>
       </ion-card>
-    </div>
+
        
 
 
