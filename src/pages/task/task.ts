@@ -61,7 +61,7 @@ this.navCtrl.push(TaskDetailPage);
 
 private editTask(taskID: number, petID: number) {
 console.log("editing entry ", petID);
-this.navCtrl.push(TaskDetailPage, {"taskID":taskID});
+this.navCtrl.push(TaskDetailPage, {"taskID":taskID, 'petID': petID});
 }
 
 private deleteEntry(petID: number) {

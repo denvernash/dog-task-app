@@ -15,8 +15,8 @@
   
 
 
-    <div *ngFor="let task of entryDataService.tasks">
-    <ion-card>
+
+    <ion-card *ngFor="let task of entryDataService.tasks">
     <ion-item>
       <ion-avatar item-start>
           <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
@@ -30,11 +30,11 @@
           <ion-item>Schedule: {{task.schedule}}</ion-item>
           <ion-item>Deadline: {{task.deadline}}</ion-item>
           <ion-checkbox checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
-          <button ion-button item-end (click)="editTask(task.id)"> 
+          <button ion-button item-end (click)="editTask(task.id, task.pet_id)"> 
               <ion-icon name="create"></ion-icon>Edit
             </button>
       </ion-card>
-    </div>
+
        
 
 

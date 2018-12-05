@@ -16,19 +16,26 @@ export class TaskDetailPage {
  
   private task: Task;
   petID: number;
+  petlist: Pet[] =[]
+  edit_check: boolean;
 
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider) {
 
+    this.petlist = entryDataService.getEntries();
     let pet_id = this.navParams.get("petID");
     let taskID = this.navParams.get('taskID')
     if (pet_id === undefined) {
       this.petID = entryDataService.activeEntryID;
+      this.edit_check = false;
+      console.log(this.edit_check)
+      
     }
     else {
     this.petID = pet_id
+    this.edit_check = true;
     
     console.log("here's what i've got for my id", taskID)
     }
