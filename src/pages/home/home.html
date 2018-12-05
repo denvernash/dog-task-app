@@ -31,50 +31,30 @@
     </ion-row>
   </ion-grid> -->
 
-  <ion-list id= 'peeps'>
-      
-
-    <ion-item *ngFor="let entry of entries">
-      
-        <ion-label (click)="taskOverview(entry.id)">
-        <div class= 'card card-1'>
-        <img class="diaryimage" [src]="entry.image" />
-        </div>
-      </ion-label>
-
-      <ion-label (click)="taskOverview(entry.id)"><h2>{{entry.title}}</h2></ion-label>
-      <ion-label (click)="taskOverview(entry.id)">
-        <p>{{entry.text}}</p>
-        <p>{{entry.timestamp}}</p>
-
-      </ion-label>
-      <button ion-button item-end (click)="editEntry(entry.id)">Edit
-          <ion-icon name="create"></ion-icon>
-        </button>
-        <button ion-button clear icon-only item-start (click)="deleteEntry(entry.id)">
-            <ion-icon name="close-circle"></ion-icon>
-          </button>
-    </ion-item>
-  </ion-list>
+ 
 
   <ion-card *ngFor="let entry of entries">
-      
-  <ion-card-header>
-      Hello {{entry.title}}
-  </ion-card-header>
 
   <ion-card-content>
-    <ion-list>
+
       <ion-item>
       <ion-avatar item-start>
-          <img class='av' [src]="entry.image" />
+          <img [src]="entry.image" />
       </ion-avatar>
-      <h2>{{entry.text}}</h2>
+      <h2><strong>{{entry.text}}</strong></h2>
+      <p>{{entry.timestamp | date:'short'}}</p>
     </ion-item>
-    <ion-item>
-        {{entry.timestamp}}
-    </ion-item>
-    </ion-list>
+      
+   
+
+
+    
+    <ion-buttons item-end style= 'float: right;'>
+      <button color='primary' ion-button icon-only clear icon-end (click)="deleteEntry(entry.id)">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    <button small color='primary' ion-button outline (click)="editEntry(entry.id)">Edit</button>
+  </ion-buttons>
   </ion-card-content>
 
   </ion-card>
@@ -84,7 +64,7 @@
 
 </ion-content>
 <ion-footer>
-    <ion-item>
-        <button ion-button full (click)="addEntry()">Add Pet</button>
-      </ion-item>
+  <ion-fab right bottom>
+    <button ion-fab color='primary' (click)="addEntry()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-footer>
