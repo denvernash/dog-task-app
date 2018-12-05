@@ -19,7 +19,7 @@ export class HomePage {
 
       this.entryDataService.getObservable().subscribe(update => {
         this.entries = entryDataService.getEntries();
-        console.log(this.entries)
+        
 
 
         for (let e of this.entries) {

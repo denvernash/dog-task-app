@@ -30,7 +30,7 @@
           <ion-item>Schedule: {{task.schedule}}</ion-item>
           <ion-item>Deadline: {{task.deadline}}</ion-item>
           <ion-checkbox checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
-          <button ion-button item-end (click)="editTask(task.id)"> 
+          <button ion-button item-end (click)="editTask(task.id, task.pet_id)"> 
               <ion-icon name="create"></ion-icon>Edit
             </button>
       </ion-card>
