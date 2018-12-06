@@ -31,12 +31,15 @@
 
   <ion-list>
     <ion-item>
-      <button ion-button color='danger' (click)="cancelEntry()">Cancel </button>
       <button ion-button (click)="saveEntry()">Save</button>
+      <button ion-button color='danger' (click)="cancelEntry()">Cancel </button>
     </ion-item>
 
-    <ion-item no-lines>
+    <ion-item [ngClass]= 'hidden(entry.id)' no-lines>
       <p>Created: {{createDate | date:'short'}}</p>
+      <button item-end color='danger' ion-button outline icon-end (click)="ConfirmDelete(entry.id)">Delete
+        <ion-icon name="trash"></ion-icon>
+      </button>
     </ion-item>
 
   </ion-list>
