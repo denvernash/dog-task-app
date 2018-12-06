@@ -14,6 +14,7 @@ export class Task {
     notes: string;
     deadline: string;
     schedule: string;
+    refresh: number;
     complete: boolean;
     completed_date: Date;
     time: number;

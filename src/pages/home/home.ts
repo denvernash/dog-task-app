@@ -4,6 +4,8 @@ import { Pet } from '../../models/entry';
 import { EntryDetailPage } from '../entry-detail/entry-detail';
 import { TaskPage } from '../task/task';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
+import { AlertController } from 'ionic-angular';
+
 
 
 @Component({
@@ -15,7 +17,8 @@ export class HomePage {
 
   
   constructor(public navCtrl: NavController,
-    public entryDataService: EntryDataServiceProvider) {
+    public entryDataService: EntryDataServiceProvider,
+    private alertCtrl: AlertController)  {
 
       this.entryDataService.getObservable().subscribe(update => {
         this.entries = entryDataService.getEntries();

@@ -45,7 +45,7 @@
           <ion-item>
             <ion-checkbox checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
             
-            <ion-label>Due: {{task.deadline}}</ion-label>
+            <ion-label>Due:  {{task.deadline}}</ion-label>
               <ion-input placeholder= "Completed?" disabled=true [value] = "task.completed_date | date:'short'"></ion-input>
             </ion-item>
           

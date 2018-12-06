@@ -5,6 +5,8 @@ import { Observer } from 'rxjs/Observer';
 import { Storage } from '@ionic/storage';
 import { firebaseConfig } from '../../models/firefile';
 import firebase from 'firebase';
+import { AlertController } from 'ionic-angular';
+
 
 
 
@@ -23,7 +25,7 @@ export class EntryDataServiceProvider {
   public days: Day[] = [];
   public loaded: boolean = false;
 
-  constructor(private storage: Storage) { 
+  constructor(private storage: Storage, private alertCtrl: AlertController) { 
 
     firebase.initializeApp(firebaseConfig);
     this.db = firebase.database();
@@ -158,7 +160,6 @@ public addTask(newTask: Task) {
   this.notifySubscribers;
   this.saveData();
   }
-
 
 
 ////////////////////////////////////////////////////////////////
@@ -309,8 +310,6 @@ public updateTaskTime(id) {
 
 
 
-
-
 ////////////////////////////////////////////////////////////////
 ////////        DELETE FUNCTIONS
 ////////////////////////////////////////////////////////////////  
@@ -446,10 +445,12 @@ private saveDays(): void {
       notes: '',
       deadline: data.deadline,
       schedule: data.schedule,
+      refresh: 0,
       complete: false,
       completed_date: null,
       time: null
     });
+
     this.notifySubscribers();
     this.save();
 
@@ -522,7 +523,20 @@ public verifyScheduleExists(schedule): boolean{
   return false
 }
 
-
-
+/*!!!!Doesnt loop properly*/
+public refreshSchedule() {
+  for (let task of this.tasks) {
+    if (task.schedule === 'Daily') {
+      task.refresh = 5;
+      setInterval(function(){ task.complete = false; }, task.refresh);
+    }
+    else if (task.schedule === 'Weekly') {
+      task.refresh = 604800000;
+    }
+    else if (task.schedule === 'Monthly') {
+      task.refresh = 2419200000; 
+    }
+  }
+}
 
 } // <<----- HERE ENDS THE CLASS EntryDataServiceProvider
