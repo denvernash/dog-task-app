@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Pet, Task } from '../../models/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 
@@ -18,11 +18,12 @@ export class TaskDetailPage {
   petID: number;
   petlist: Pet[] =[]
   edit_check: boolean;
-
+  selectOptions: object;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
-    public entryDataService: EntryDataServiceProvider) {
+    public entryDataService: EntryDataServiceProvider,
+    public alertCtrl: AlertController) {
 
     this.petlist = entryDataService.getEntries();
     let pet_id = this.navParams.get("petID");
@@ -61,7 +62,11 @@ export class TaskDetailPage {
 }
 
 
-  }
+
+
+
+
+  } /// <----- CONSTRUCTOR ENDS HERE
 
 private saveEntry() {
   
@@ -79,6 +84,48 @@ private saveEntry() {
 public cancelEntry() {
   this.navCtrl.pop();
 }
+
+
+
+private deleteEntry(id: number) {
+  this.entryDataService.removeTask(id)
+    this.navCtrl.pop()
+  }
+
+public ConfirmDelete(id): any {
+  let alert = this.alertCtrl.create({
+    title: 'Confirm Pet Deletion',
+    message: 'Do you want to delete this pet?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('I said no')
+          
+        }
+      },
+      {
+        text: 'Delete',
+        handler: () => {
+          console.log("I said yes")
+          this.deleteEntry(id)
+        }
+      }
+    ]
+  });
+  alert.present();
+}
+
+public hidden(id): string {
+  if (id === -1)
+  return "hidden"
+}
+
+
+
+
+
 
 
  

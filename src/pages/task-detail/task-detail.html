@@ -45,26 +45,53 @@
 
   <h2>Rules</h2>
   <ion-list>
-    <ion-item >
+    
+    
+    
+    <ion-item>
       <ion-label>Task Schedule:</ion-label>
-      <ion-input type= 'text' placeholder= "Daily" [(ngModel)]="task.schedule">
-      </ion-input>
+        <ion-select value= "Daily" [(ngModel)]="task.schedule">
+          <ion-option>Daily</ion-option>
+          <ion-option>Every Other Day</ion-option>
+          <ion-option>Weekly</ion-option>
+          <ion-option>Bi-Weekly</ion-option>
+          <ion-option>Monthly</ion-option>
+          <ion-option>Yearly</ion-option>
+        </ion-select>
     </ion-item>
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <ion-item>
       <ion-label>Task Deadline</ion-label>
-      <ion-input type="text" placeholder="7am" [(ngModel)]="task.deadline">
-      </ion-input>
-    </ion-item>
-  </ion-list>
+      <ion-datetime displayFormat= 'h:mm a' [(ngModel)]="task.deadline">
 
+      
+      
+      
+      </ion-datetime>
   
-  <ion-list>
-    <ion-item>
-      <button ion-button (click)="cancelEntry()">Cancel </button>
-      <button ion-button (click)="saveEntry()">Save</button>
     </ion-item>
-
-
   </ion-list>
+
+  <ion-list>
+      <ion-item>
+        <button ion-button (click)="saveEntry()">Save</button>
+        <button ion-button color='danger' (click)="cancelEntry()">Cancel </button>
+      </ion-item>
+  
+      <ion-item [ngClass]= 'hidden(task.id)' no-lines>
+        <button item-end color='danger' ion-button outline icon-end (click)="ConfirmDelete(task.id)">Delete
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item>
+  
+    </ion-list>
 
 </ion-content>
