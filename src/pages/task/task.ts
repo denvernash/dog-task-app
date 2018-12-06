@@ -23,6 +23,10 @@ export class TaskPage {
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider) {
 
+
+      
+      // this.tasklist = entryDataService.getTasks();
+
       console.log('Constructor')
       let petID = this.navParams.get("petID");
       

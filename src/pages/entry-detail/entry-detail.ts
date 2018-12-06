@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Pet } from '../../models/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { HomePage } from '../home/home'
+
 
 
 const PLACEHOLDER_IMAGE: string = "/assets/imgs/placeholder.png";
@@ -23,7 +24,9 @@ export class EntryDetailPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
-    public entryDataService: EntryDataServiceProvider, private camera: Camera) {
+    public entryDataService: EntryDataServiceProvider, 
+    private camera: Camera,
+    private alertCtrl: AlertController) {
 
     let entryID = this.navParams.get("entryID");
     let entry = this.entryDataService.getEntryByID(entryID);
@@ -70,6 +73,53 @@ public cancelEntry() {
   this.navCtrl.pop()
 }
 
+
+private deleteEntry(petID: number) {
+  this.entryDataService.removeEntry(petID)
+  if (this.navCtrl.canGoBack()) {
+    this.navCtrl.pop()
+  }
+  else{
+    this.navCtrl.setRoot(HomePage);
+  }
+  
+}
+
+
+
+
+public ConfirmDelete(id): any {
+  let alert = this.alertCtrl.create({
+    title: 'Confirm Pet Deletion',
+    message: 'Do you want to delete this pet?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('I said no')
+          
+        }
+      },
+      {
+        text: 'Delete',
+        handler: () => {
+          console.log("I said yes")
+          this.deleteEntry(id)
+        }
+      }
+    ]
+  });
+  alert.present();
+}
+
+
+
+
+
+
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad EntryDetailPage');
   }
@@ -93,5 +143,17 @@ public cancelEntry() {
      });
     this.entry.image = SPINNER_IMAGE;
   }
+
+
+
+
+
+
+
+  public hidden(id): string {
+    if (id === -1)
+    return "hidden"
+  }
+
 
 }

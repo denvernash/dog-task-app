@@ -16,10 +16,8 @@ export class EntryDataServiceProvider {
   private db: any;
   private entries:Pet[] = [];
   public activeEntryID: number;
-  private PetserviceObserver: Observer<Pet[]>;
-  private PetclientObservable: Observable<Pet[]>;
-  private TaskserviceObserver: Observer<Task[]>;
-  private TaskclientObservable: Observable<Task[]>;
+  private serviceObserver: Observer<Pet[]>;
+  private clientObservable: Observable<Pet[]>;
   private nextID: number = 0;
   public tasks: Task[] = [];
   public days: Day[] = [];
@@ -30,14 +28,13 @@ export class EntryDataServiceProvider {
     firebase.initializeApp(firebaseConfig);
     this.db = firebase.database();
 
-    this.PetclientObservable = Observable.create(observerThatWasCreated => {
-      this.PetserviceObserver = observerThatWasCreated;
-    });
-    this.TaskclientObservable = Observable.create(createdObserver => {
-      this.TaskserviceObserver = createdObserver;
+    this.clientObservable = Observable.create(observerThatWasCreated => {
+      this.serviceObserver = observerThatWasCreated;
     });
 
-    // loading pets
+    ////////////////////////////////////////////////////////////////
+    ////////            LOADING PETS
+    ////////////////////////////////////////////////////////////////
     let dataRef = this.db.ref('/allEntry/pets');
     dataRef.on('value', snapshot => {
     this.entries = []; //start with a blank list
@@ -57,7 +54,9 @@ export class EntryDataServiceProvider {
     });
 
 
-    // loading tasks
+    ////////////////////////////////////////////////////////////////
+    ////////            LOADING TASKS
+    ////////////////////////////////////////////////////////////////
     let taskRef = this.db.ref('/allEntry/tasks')
     taskRef.on('value', snapshot => {
       this.tasks = [];
@@ -88,12 +87,14 @@ export class EntryDataServiceProvider {
        });
        this.notifySubscribers(); 
       } else {
-        console.log("DOESN'T EXIST")
+        console.log("SNAPSHOT DOESN'T EXIST IN FIREBASE")
       };
   });
 
 
-    // geting Unique ID
+    ////////////////////////////////////////////////////////////////
+    ////////        GETTING UNIQUE ID FOR STORAGE
+    ////////////////////////////////////////////////////////////////
     let Ref = this.db.ref('/lastID');
     Ref.on('value', snapshot => {
       if(snapshot.exists()) { 
@@ -103,12 +104,12 @@ export class EntryDataServiceProvider {
 
 
 
-  }
+  }   //<--- HERE ENDS THE CONSTRUCTOR
 
 
 
-
-
+// INPUT: NONE
+// OUTPUT: UNIQUE ID
   private getUniqueID(): number {
     let uniqueID = this.nextID++;
     let listRef = this.db.ref('/lastID');
@@ -117,6 +118,23 @@ export class EntryDataServiceProvider {
   }
 
 
+////////////////////////////////////////////////////////////////
+////////            CRUD FUNCTIONS BELOW
+////////            CREATE
+////////            READ
+////////            UPDATE
+////////            DELETE
+////////            SAVE FUNCTIONS
+////////            OTHER FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////        CREATE FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+
+// INPUT: NEW PET ENTRY
+// OUTPUT: PUSHES NEW PET TO ENTRIES LIST
 public addEntry(entry:Pet) {
   entry.id = this.getUniqueID();
   entry.timestamp = new Date();
@@ -127,23 +145,9 @@ public addEntry(entry:Pet) {
   
 }
 
-public updateTaskTime(id) {
-let task = this.findTaskByID(id);
-  if (task.complete) {
-    console.log("THIS IS TRUE, ASSIGNING NEW DATE")
-    task.completed_date = new Date();
-    task.time = task.completed_date.getTime();
-  }
-  console.log(task.time)
-  this.notifySubscribers();
-  console.log(task.time)
-  console.log("THIS IS WHERE IT BREAKS")
-  this.saveData();
-  console.log("DID IT DELETE THE TIME", task.time)
-}
 
-
-
+// INPUT: NEW TASK
+// OUTPUT: PUSHES NEW TASK TO TASK LIST
 public addTask(newTask: Task) {
   newTask.id = this.getUniqueID() + 1000;
   newTask.complete = false;
@@ -153,53 +157,46 @@ public addTask(newTask: Task) {
   this.notifySubscribers;
   this.saveData();
   }
-  
+
+
+
+////////////////////////////////////////////////////////////////
+////////        READ FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+
+
+// INPUT: NONE
+// OUTPUT: CLIENTOBSERVABLE
+public getObservable(): Observable<Pet[]> {
+  return this.clientObservable;
+}
+
+
+
+// INPUT: NONE
+// OUTPUT: RETURNS CLONE OF PET ENTRIES LIST
  public getEntries():Pet[] {  
   let entriesClone = JSON.parse(JSON.stringify(this.entries));
   return entriesClone;
 }
+
+
+
+
+
+// INPUT: NONE
+// OUTPUT: RETURNS CLONE OF TASK LIST
 public getTasks(): Task[] {
   let tasksClone = JSON.parse(JSON.stringify(this.tasks));
   return tasksClone;
 }
 
-public getObservable(): Observable<Pet[]> {
-  return this.PetclientObservable;
-}
-
-
-private notifySubscribers(): void {
-  this.PetserviceObserver.next(undefined);
-}
-private notifyAgain(): void {
-  this.TaskserviceObserver.next(undefined);
-}
-
-private saveData(): void {
-  
-  // saving pets
-  let listRef = this.db.ref('/allEntry/pets');
-  for (let entry of this.entries) {
-  listRef.child(entry.id).set(entry);
-}
-// saving tasks
-let listRef2 = this.db.ref('/allEntry/tasks');
-  for (let task of this.tasks) {
-  console.log("did it delete the time?", task.id, task.time)
-  listRef2.child(task.id).set(task);
-  }
-
-// saving days
-let listRef3 = this.db.ref('/allEntry/days');
-for (let day of this.days) {
-listRef3.child(day.id).set(day);
-  }
-
-}
 
 
 
-
+// INPUT: ENTRY ID
+// OUTPUT: RETURNS CLONE OF ENTRY WITH ENTRY ID
 public getEntryByID(id: number): Pet {
   for (let e of this.entries) {
     if (e.id === id) {
@@ -210,6 +207,9 @@ public getEntryByID(id: number): Pet {
   return undefined;
 }
 
+
+// INPUT: TASK ID
+// OUTPUT: RETURNS CLONE OF TASK WITH TASK ID
 public getTaskByID(id: number): Task {
   for (let e of this.tasks) {
     if (e.id === id) {
@@ -220,6 +220,44 @@ public getTaskByID(id: number): Task {
   return undefined;
 }
 
+
+
+
+
+// INPUT: ENTRY ID
+// OUTPUT: RETURNS ENTRY WITH ENTRY ID
+private findEntryByID(id: number): Pet {
+  for (let e of this.entries) {
+    if (e.id === id) {
+      return e;
+    }
+  }
+  return undefined;
+}
+
+
+
+// INPUT: TASK ID
+// OUTPUT: RETURNS TASK WITH TASK ID
+private findTaskByID(id: number): Task {
+  for (let e of this.tasks) {
+    if (e.id === id) {
+      return e;
+    }
+  }
+  return undefined;
+}
+
+
+
+
+////////////////////////////////////////////////////////////////
+////////        UPDATE FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+
+// INPUT: ENTRY ID AND NEW PET TO OVERWRITE OLD ONE
+// OUTPUT: OVERWRITES OLD PET DATA WITH NEW PET DATA
 public updateEntry(id: number, newEntry: Pet): void {
   let entryToUpdate: Pet = this.findEntryByID(id);
   console.log(id, newEntry.title)
@@ -228,11 +266,13 @@ public updateEntry(id: number, newEntry: Pet): void {
   entryToUpdate.timestamp = new Date();
   entryToUpdate.time = entryToUpdate.timestamp.getTime();
   entryToUpdate.image = newEntry.image;
-
   this.notifySubscribers();
   this.saveData();
 }
 
+
+// INPUT: NEW TASK TO OVERWRITE OLD ONE
+// OUTPUT: OVERWRITES TASK DATA WITH NEW TASK INFO
 public updateTask(newTask: Task): void {
   let taskToUpdate: Task = this.findTaskByID(newTask.id)
   taskToUpdate.title = newTask.title;
@@ -249,26 +289,35 @@ public updateTask(newTask: Task): void {
 }
 
 
-
-private findEntryByID(id: number): Pet {
-  for (let e of this.entries) {
-    if (e.id === id) {
-      return e;
+// INPUT: TASK ID
+// OUTPUT: ASSIGNS NEW COMPLETED DATE TO TASK IF USER INPUTS TASK IS COMPLETED  
+public updateTaskTime(id) {
+  let task = this.findTaskByID(id);
+    if (task.complete) {
+      console.log("THIS IS TRUE, ASSIGNING NEW DATE")
+      task.completed_date = new Date();
+      task.time = task.completed_date.getTime();
     }
+    console.log(task.time)
+    this.notifySubscribers();
+    console.log(task.time)
+    console.log("THIS IS WHERE IT BREAKS")
+    this.saveData();
   }
-  return undefined;
-}
-
-private findTaskByID(id: number): Task {
-  for (let e of this.tasks) {
-    if (e.id === id) {
-      return e;
-    }
-  }
-  return undefined;
-}
 
 
+
+
+
+
+////////////////////////////////////////////////////////////////
+////////        DELETE FUNCTIONS
+////////////////////////////////////////////////////////////////  
+
+
+
+// INPUT: PET ENTRY ID
+// OUTPUT: SLICES PET ENTRY AND TASKS ASSOCIATED WITH PET FROM ENTRY LIST AND DB
 public removeEntry(id: number): void {
   let listRef = this.db.ref('/allEntry/pets');
   for (let i=0; i < this.entries.length; i++) {
@@ -280,10 +329,92 @@ public removeEntry(id: number): void {
       break;
     }
   }
+  let taskRef = this.db.ref('/allEntry/tasks');
+  for (let i=0; i < this.tasks.length; i++) {
+    let pet_id = this.tasks[i].pet_id;
+    if (pet_id === id) {
+      let taskID = this.tasks[i].id
+      this.tasks.splice(i, 1);
+      taskRef.child(taskID).remove();
+    }
+  }
   this.notifySubscribers();
   this.saveData();
 
 }
+
+
+// INPUT TASK ID
+// OUTPUT REMOVES TASK FROM LIST AND DB
+public removeTask(id: number): void {
+  let taskRef = this.db.ref('/allEntry/tasks');
+  for (let i=0; i < this.tasks.length; i++) {
+    let iID = this.tasks[i].id;
+    if (iID === id) {
+      this.tasks.splice(i, 1);
+      taskRef.child(iID).remove()
+      break;
+    }
+  }
+}
+
+
+
+////////////////////////////////////////////////////////////////
+////////        SAVE DATA FUNCTIONS
+////////////////////////////////////////////////////////////////  
+
+
+
+// INPUT: NONE
+// OUTPUT: TELLS OBSERVER DATA CHANGED
+private notifySubscribers(): void {
+  this.serviceObserver.next(undefined);
+}
+
+
+// INPUT: NONE
+// OUTPUT: CALLS FOLLOWING SAVE FUNCTIONS
+private saveData(): void {
+  this.savePets(); this.saveTasks(); this.saveDays();
+}
+
+
+// INPUT: NONE
+// OUTPUT: SAVES TASKS TO DB
+private saveTasks(): void {
+  let listRef2 = this.db.ref('/allEntry/tasks');
+  for (let task of this.tasks) {listRef2.child(task.id).set(task);}
+}
+
+
+// INPUT: NONE
+// OUTPUT: SAVES PETS TO DB
+private savePets(): void {
+  let listRef = this.db.ref('/allEntry/pets');
+  for (let entry of this.entries) {listRef.child(entry.id).set(entry);}
+}
+
+// INPUT: NONE
+// OUTPUT: SAVES DAYS TO DB
+private saveDays(): void {
+  let listRef3 = this.db.ref('/allEntry/days');
+  for (let day of this.days) {listRef3.child(day.id).set(day);}
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////
+////////        CREATE PAGE SPECIFIC FUNCTIONS
+////////////////////////////////////////////////////////////////  
+
+
+
 
 
   load(): Promise<boolean> {
@@ -366,9 +497,25 @@ public removeEntry(id: number): void {
 
 
 
+////////////////////////////////////////////////////////////////
+////////        TASK PAGE VIEW FUNCTIONS
+////////
+////////        this exists because I can't get the constructor
+////////        to work with two observers/observables on both
+////////        pets and tasks. We don't technically need an 
+////////        observable to get it to work since we can alter
+////////        the view here instead.
+////////////////////////////////////////////////////////////////  
 
-
+public sortTasks(){
+  for (let task of this.tasks) {
+    task.deadline
+  }
 
 }
 
 
+
+
+
+} // <<----- HERE ENDS THE CLASS EntryDataServiceProvider
