@@ -42,7 +42,6 @@ export class TaskDetailPage {
     }
   
 
-
   if (taskID === undefined) {
     this.task = new Task();
     this.task.title = "";
@@ -68,6 +67,7 @@ export class TaskDetailPage {
 
   } /// <----- CONSTRUCTOR ENDS HERE
 
+
 private saveEntry() {
   
 
@@ -80,14 +80,13 @@ private saveEntry() {
     this.entryDataService.updateTask(this.task);
  
   }
+
   this.navCtrl.pop();
 }
 
 public cancelEntry() {
   this.navCtrl.pop();
 }
-
-
 
 private deleteEntry(id: number) {
   this.entryDataService.removeTask(id)

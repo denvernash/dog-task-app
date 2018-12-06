@@ -4,6 +4,8 @@ import { Pet, Task } from '../../models/entry';
 import { EntryDetailPage } from '../entry-detail/entry-detail';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { TaskDetailPage } from '../task-detail/task-detail';
+import { AlertController } from 'ionic-angular';
+
 
 
 @IonicPage()
@@ -21,7 +23,8 @@ export class TaskPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
-    public entryDataService: EntryDataServiceProvider) {
+    public entryDataService: EntryDataServiceProvider,
+    private alertCtrl: AlertController) {
 
 
       
@@ -54,7 +57,8 @@ export class TaskPage {
   }
 
 ngOnInit() {
-console.log(this.entryDataService.tasks)
+console.log(this.entryDataService.tasks);
+this.entryDataService.refreshSchedule();
 }
 
 
