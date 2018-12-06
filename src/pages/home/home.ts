@@ -56,10 +56,12 @@ private deleteEntry(petID: number) {
   console.log('deleting entry', petID)
 }
 
-private taskOverview(petID: number) {
+private seeTasks(petID: number) {
   this.navCtrl.push(TaskPage, {"petID": petID});
   console.log('hello')
 }
+
+
 
 
 }

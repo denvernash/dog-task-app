@@ -14,11 +14,11 @@
 
 <ion-content padding>
     <h2>Details</h2>
-    <ion-item >
+    <ion-item color='secondary' >
         <ion-avatar item-start>
-            <img [src]="entryDataService.getEntryByID(petID).image" />
+            <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
         </ion-avatar>
-        <ion-select item-start [(ngModel)]="petID" [disabled] = 'edit_check'>
+        <ion-select item-start [(ngModel)]="task.pet_id" [disabled] = 'edit_check'>
           <ion-option *ngFor='let pet of petlist' [value]= pet.id>
             {{pet.title}}
           </ion-option>

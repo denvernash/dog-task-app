@@ -13,40 +13,81 @@
    
 
   
-
-<h1>All Tasks</h1>
+<ng-container *ngIf = 'entry.id == -1; else pet' >
+<h1>All Pet Tasks</h1>
 
 
 <!-- ****** DAILY, WEEKLY, MONTHLY TASKS  ******     -->
     
+        <ng-container *ngFor= 'let schedule of ["Daily", "Weekly", "Monthly"]'>
+        <h2 *ngIf= 'entryDataService.verifyScheduleExists(schedule, entryDataService.entries)'>{{schedule}}</h2>
+        <ng-container *ngFor="let task of entryDataService.tasks">
+        <ion-card *ngIf= 'task.schedule == schedule'>
+      
+      
+        <ion-list>
+         <ion-item detail-push color= 'secondary' (click)="editTask(task.id, task.pet_id)">
+          <ion-avatar item-start>
+              <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
+          </ion-avatar>
+          <h2><strong>{{task.title}}</strong></h2>
+          <!-- <button ion-button item-end icon-start (click)="editTask(task.id, task.pet_id)">
+            <ion-icon name="create"></ion-icon>Edit
+            </button> -->
+          
+            </ion-item>
+        
+        
+    
+                <ion-item>
+                <ion-icon color= 'primary' name = 'list-box'></ion-icon> Notes: {{task.notes}}
+                </ion-item>
+                <ion-item>
+                
+                <ion-label><ion-icon color= 'primary' name= 'timer'></ion-icon> Due: {{task.deadline}}</ion-label>
+                  <ion-input placeholder= "Completed?" disabled=true [value] = "task.completed_date | date:'short'"></ion-input>
+                  <ion-checkbox item-end checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
+                </ion-item>
+              
+            </ion-list>
+                
+               
+          </ion-card>
+        </ng-container>
+    </ng-container>
+
+</ng-container>
+
+<ng-template #pet>
+<h1>Tasks for {{entry.title}}</h1>
+
+<!-- ****** DAILY, WEEKLY, MONTHLY TASKS  ******     -->
+    
     <ng-container *ngFor= 'let schedule of ["Daily", "Weekly", "Monthly"]'>
-    <h2 *ngIf= 'entryDataService.verifyScheduleExists(schedule)'>{{schedule}}</h2>
+    <h2 *ngIf= 'entryDataService.verifyScheduleExists(schedule, [entry])'>{{schedule}}</h2>
     <ng-container *ngFor="let task of entryDataService.tasks">
-    <ion-card *ngIf= 'task.schedule == schedule'>
+    <ion-card *ngIf= 'task.schedule == schedule && task.pet_id == entry.id'>
   
   
-  
-     <ion-item color= 'secondary'>
+    <ion-list>
+     <ion-item detail-push color= 'secondary' (click)="editTask(task.id, task.pet_id)">
       <ion-avatar item-start>
           <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
       </ion-avatar>
-      <h2><strong>{{entryDataService.getEntryByID(task.pet_id).title}}</strong></h2>
-      <button ion-button item-end icon-start (click)="editTask(task.id, task.pet_id)">
-        <ion-icon name="create"></ion-icon>Edit
-        </button>
+      <h2><strong>{{task.title}}</strong></h2>
+
       
         </ion-item>
     
     
 
-        <ion-list>
-          <ion-item>Task: {{task.title}}</ion-item>
-          <!-- <ion-item>Schedule: {{task.schedule}}</ion-item> -->
-          <ion-item>
-            <ion-checkbox checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
+            <ion-item><ion-icon color= 'primary' name = 'list-box'></ion-icon> Notes: {{task.notes}}</ion-item>
             
-            <ion-label>Due: {{task.deadline}}</ion-label>
+
+            <ion-item>
+            <ion-label><ion-icon color= 'primary' name= 'timer'></ion-icon> Due: {{task.deadline}}</ion-label>
               <ion-input placeholder= "Completed?" disabled=true [value] = "task.completed_date | date:'short'"></ion-input>
+              <ion-checkbox item-end checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
             </ion-item>
           
         </ion-list>
@@ -55,13 +96,14 @@
       </ion-card>
     </ng-container>
 </ng-container>
+</ng-template>
 
 
 
 </ion-content>
 
 <ion-footer>
-    <ion-item>
-        <button ion-button full (click)="addEntry(entry.id)">Add Task</button>
-      </ion-item>
+<ion-fab right bottom>
+<button ion-fab color='primary' (click)="addEntry()"><ion-icon name="add"></ion-icon></button>
+</ion-fab>
 </ion-footer>

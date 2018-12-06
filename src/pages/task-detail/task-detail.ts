@@ -50,8 +50,8 @@ export class TaskDetailPage {
     this.task.id = -1; // placeholder for 'temporary' entry
     this.task.pet_id = this.petID;
     console.log('giving taskid -1')
-    this.task.deadline = ''
-    this.task.schedule = ''
+    this.task.deadline = "08:00"
+    this.task.schedule = 'Daily'
   } else {
     console.log("Here's my id's", taskID, pet_id)
     
@@ -70,6 +70,8 @@ export class TaskDetailPage {
 
 private saveEntry() {
   
+
+
   if (this.task.id === -1) { 
     this.entryDataService.addTask(this.task);
 
@@ -94,8 +96,8 @@ private deleteEntry(id: number) {
 
 public ConfirmDelete(id): any {
   let alert = this.alertCtrl.create({
-    title: 'Confirm Pet Deletion',
-    message: 'Do you want to delete this pet?',
+    title: 'Confirm Task Deletion',
+    message: 'Do you want to delete this Task?',
     buttons: [
       {
         text: 'Cancel',

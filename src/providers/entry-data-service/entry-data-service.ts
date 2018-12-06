@@ -155,7 +155,7 @@ public addTask(newTask: Task) {
   newTask.completed_date = null;
   newTask.time = null;
   this.tasks.push(newTask);
-  this.notifySubscribers;
+  this.sortTasks();
   this.saveData();
   }
 
@@ -199,6 +199,8 @@ public getTasks(): Task[] {
 // INPUT: ENTRY ID
 // OUTPUT: RETURNS CLONE OF ENTRY WITH ENTRY ID
 public getEntryByID(id: number): Pet {
+  console.log(id)
+  
   for (let e of this.entries) {
     if (e.id === id) {
       let clone = JSON.parse(JSON.stringify(e));
@@ -333,7 +335,8 @@ public removeEntry(id: number): void {
   let taskRef = this.db.ref('/allEntry/tasks');
   for (let i=0; i < this.tasks.length; i++) {
     let pet_id = this.tasks[i].pet_id;
-    if (pet_id === id) {
+    if (pet_id == id) {
+      console.log(this.tasks[i])
       let taskID = this.tasks[i].id
       this.tasks.splice(i, 1);
       taskRef.child(taskID).remove();
@@ -515,12 +518,45 @@ public sortTasks(){
     });
 }
 
-public verifyScheduleExists(schedule): boolean{
+
+// INPUT SCHEDULE (I.E DAILY, WEEKLY, ETC) & A LIST OF PETS TO CHECK IDS
+// OUTPUT IF SCHEDULE EXISTS ON PETIDS RETURNS TRUE, OTHERWISE FALSE
+public verifyScheduleExists(schedule, petlist): boolean{
+  let taskcheck = [];
+  for (let p of petlist){
+    taskcheck.push(p.id)
+  }
   for (let task of this.tasks){
-    if (task.schedule == schedule) {return true;}
+    // console.log("WHY ARE YOU NOT SORTING", taskcheck.indexOf(task.pet_id) != -1)
+    if (task.schedule == schedule && taskcheck.indexOf(task.pet_id) != -1 ) {return true;}
   }
   return false
 }
+
+public getTaskListForPet(petID): Task[] {
+  let ListToReturn = []
+  for (let task of this.tasks){
+    if (task.pet_id == petID //&& task.schedule == "Daily"){
+      ){ ListToReturn.push(task)
+    }
+  }
+  return ListToReturn
+}
+
+
+public listCompletedTasks(petID): any[] {
+  let completedTasks = [];
+  let taskList = this.getTaskListForPet(petID);
+  for (let task of taskList ) {
+    if (task.complete == true //&& task.schedule == 'Daily') {
+      ) { completedTasks.push(task)
+
+    }
+  }
+ return completedTasks
+}
+
+
 
 
 

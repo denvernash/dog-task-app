@@ -42,6 +42,7 @@ export class TaskPage {
       
      
     } else {
+
     this.entry = this.entryDataService.getEntryByID(petID);
     this.entryDataService.activeEntryID = this.entry.id;
     if (typeof this.entry.timestamp === 'string') {
@@ -58,7 +59,12 @@ console.log(this.entryDataService.tasks)
 
 
 private addEntry() {
-this.navCtrl.push(TaskDetailPage);
+  if (this.entry.id != -1) {
+this.navCtrl.push(TaskDetailPage, {'petID': this.entry.id});
+}
+else {
+  this.navCtrl.push(TaskDetailPage)
+}
 }
 
 
@@ -78,6 +84,10 @@ private toggleComplete(id) {
   this.entryDataService.updateTaskTime(id);
 }
 
+
+createNewDate(string_date){
+let g = new Date ()
+}
 
 
 }
