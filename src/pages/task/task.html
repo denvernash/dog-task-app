@@ -22,23 +22,36 @@
     <ng-container *ngFor= 'let schedule of ["Daily", "Weekly", "Monthly"]'>
     <h2 *ngIf= 'entryDataService.verifyScheduleExists(schedule)'>{{schedule}}</h2>
     <ng-container *ngFor="let task of entryDataService.tasks">
-    <ion-card *ngIf= 'task.schedule == schedule' >
-    <ion-item>
+    <ion-card *ngIf= 'task.schedule == schedule'>
+  
+  
+  
+     <ion-item color= 'secondary'>
       <ion-avatar item-start>
           <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
       </ion-avatar>
       <h2><strong>{{entryDataService.getEntryByID(task.pet_id).title}}</strong></h2>
-      <p>{{entryDataService.getEntryByID(task.pet_id).complete_date | date:'short'}}</p>
-    </ion-item>
-
+      <button ion-button item-end icon-start (click)="editTask(task.id, task.pet_id)">
+        <ion-icon name="create"></ion-icon>Edit
+        </button>
       
+        </ion-item>
+    
+    
+
+        <ion-list>
           <ion-item>Task: {{task.title}}</ion-item>
-          <ion-item>Schedule: {{task.schedule}}</ion-item>
-          <ion-item>Deadline: {{task.deadline}}</ion-item>
-          <ion-checkbox checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
-          <button ion-button item-end (click)="editTask(task.id, task.pet_id)"> 
-              <ion-icon name="create"></ion-icon>Edit
-            </button>
+          <!-- <ion-item>Schedule: {{task.schedule}}</ion-item> -->
+          <ion-item>
+            <ion-checkbox checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
+            
+            <ion-label>Due: {{task.deadline}}</ion-label>
+              <ion-input placeholder= "Completed?" disabled=true [value] = "task.completed_date | date:'short'"></ion-input>
+            </ion-item>
+          
+        </ion-list>
+            
+           
       </ion-card>
     </ng-container>
 </ng-container>
