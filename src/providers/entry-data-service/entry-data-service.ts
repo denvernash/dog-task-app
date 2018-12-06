@@ -528,14 +528,24 @@ public refreshSchedule() {
   for (let task of this.tasks) {
     if (task.schedule === 'Daily') {
       task.refresh = 5;
-      setInterval(function(){ task.complete = false; }, task.refresh);
+      setInterval(() => {
+        task.complete = false;
+    }, task.refresh);
     }
     else if (task.schedule === 'Weekly') {
-      task.refresh = 604800000;
+      task.refresh = 10;
+      setInterval(() => {
+        task.complete = false;
+    }, task.refresh);
+
     }
-    else if (task.schedule === 'Monthly') {
-      task.refresh = 2419200000; 
+    else {
+      task.refresh = 15; 
+      setInterval(() => {
+        task.complete = false;
+    }, task.refresh);
     }
+    console.log(task.refresh);
   }
 }
 
