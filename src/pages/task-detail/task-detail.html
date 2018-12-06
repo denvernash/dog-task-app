@@ -50,13 +50,13 @@
     
     <ion-item>
       <ion-label>Task Schedule:</ion-label>
-        <ion-select value= "Daily" [(ngModel)]="task.schedule">
+        <ion-select value= "Daily" [(ngModel)]="task.schedule"><ion-icon small item-end name="arrow-dropdown"></ion-icon>
           <ion-option>Daily</ion-option>
-          <ion-option>Every Other Day</ion-option>
+          <!-- <ion-option>Every Other Day</ion-option> -->
           <ion-option>Weekly</ion-option>
-          <ion-option>Bi-Weekly</ion-option>
+          <!-- <ion-option>Bi-Weekly</ion-option> -->
           <ion-option>Monthly</ion-option>
-          <ion-option>Yearly</ion-option>
+          <!-- <ion-option>Yearly</ion-option> -->
         </ion-select>
     </ion-item>
     
@@ -70,13 +70,8 @@
     
     <ion-item>
       <ion-label>Task Deadline</ion-label>
-      <ion-datetime displayFormat= 'h:mm a' [(ngModel)]="task.deadline">
-
-      
-      
-      
-      </ion-datetime>
-  
+      <ion-datetime displayFormat= 'h:mm a' [(ngModel)]="task.deadline"></ion-datetime>
+      <ion-icon small item-end name="arrow-dropdown"></ion-icon>
     </ion-item>
   </ion-list>
 
