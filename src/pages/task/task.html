@@ -10,13 +10,19 @@
 </ion-header>
 
 <ion-content padding>
-    <h1>Pet Name: </h1>
+   
 
   
 
+<h1>All Tasks</h1>
 
 
-    <ion-card *ngFor="let task of entryDataService.tasks">
+<!-- ****** DAILY, WEEKLY, MONTHLY TASKS  ******     -->
+    
+    <ng-container *ngFor= 'let schedule of ["Daily", "Weekly", "Monthly"]'>
+    <h2 *ngIf= 'entryDataService.verifyScheduleExists(schedule)'>{{schedule}}</h2>
+    <ng-container *ngFor="let task of entryDataService.tasks">
+    <ion-card *ngIf= 'task.schedule == schedule' >
     <ion-item>
       <ion-avatar item-start>
           <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
@@ -34,10 +40,8 @@
               <ion-icon name="create"></ion-icon>Edit
             </button>
       </ion-card>
-
-       
-
-
+    </ng-container>
+</ng-container>
 
 
 

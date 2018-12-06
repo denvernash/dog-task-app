@@ -85,6 +85,7 @@ export class EntryDataServiceProvider {
 
       
        });
+       this.sortTasks();
        this.notifySubscribers(); 
       } else {
         console.log("SNAPSHOT DOESN'T EXIST IN FIREBASE")
@@ -283,7 +284,7 @@ public updateTask(newTask: Task): void {
   taskToUpdate.completed_date = newTask.completed_date;
   taskToUpdate.time = newTask.time;
   console.log(newTask)
-  
+  this.sortTasks();
   this.notifySubscribers();
   this.saveData();
 }
@@ -508,12 +509,18 @@ private saveDays(): void {
 ////////////////////////////////////////////////////////////////  
 
 public sortTasks(){
-  for (let task of this.tasks) {
-    task.deadline
-  }
 
+    this.tasks.sort((a: Task, b: Task) => {
+      return parseInt(a.deadline) - parseInt(b.deadline)
+    });
 }
 
+public verifyScheduleExists(schedule): boolean{
+  for (let task of this.tasks){
+    if (task.schedule == schedule) {return true;}
+  }
+  return false
+}
 
 
 
