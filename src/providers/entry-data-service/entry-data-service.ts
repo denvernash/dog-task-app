@@ -200,7 +200,6 @@ public getTasks(): Task[] {
 // INPUT: ENTRY ID
 // OUTPUT: RETURNS CLONE OF ENTRY WITH ENTRY ID
 public getEntryByID(id: number): Pet {
-  console.log(id)
   
   for (let e of this.entries) {
     if (e.id === id) {
@@ -323,7 +322,6 @@ public updateTaskTime(id) {
 public removeEntry(id: number): void {
   let listRef = this.db.ref('/allEntry/pets');
   for (let i=0; i < this.entries.length; i++) {
-    console.log(i)
     let iID = this.entries[i].id;
     if (iID === id) {
       this.entries.splice(i, 1);
@@ -332,12 +330,11 @@ public removeEntry(id: number): void {
     }
   }
   let taskRef = this.db.ref('/allEntry/tasks');
-  for (let i=0; i < this.tasks.length; i++) {
-    let pet_id = this.tasks[i].pet_id;
-    if (pet_id == id) {
-      console.log(this.tasks[i])
-      let taskID = this.tasks[i].id
-      this.tasks.splice(i, 1);
+  for (let ix = this.tasks.length-1; ix >= 0; --ix) {
+    let ts = this.tasks
+    if (ts[ix].pet_id == id) {
+      let taskID = ts[ix].id
+      ts.splice(ix, 1);
       taskRef.child(taskID).remove();
     }
   }
@@ -345,6 +342,8 @@ public removeEntry(id: number): void {
   this.saveData();
 
 }
+
+
 
 
 // INPUT TASK ID
