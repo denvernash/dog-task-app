@@ -8,7 +8,7 @@
     
     
     <figure class='logo'>
-    <img src="../../assets/icon/dawg-icon.png" alt="Logo">
+    <img src="../../assets/icon/dawg-icon2.png" alt="Logo">
     </figure>  
     
      
@@ -37,22 +37,31 @@
 
   <ion-card-content>
 
-      <ion-item>
+      <ion-item detail-push (click)="editEntry(entry.id)">
       <ion-avatar item-start>
           <img [src]="entry.image" />
       </ion-avatar>
-      <h2><strong>{{entry.title}}</strong></h2>
-      <p>{{entry.timestamp | date:'short'}}</p>
+      <ion-label>
+      <h2 style= 'display: inline-block;'><strong>{{entry.title}}</strong></h2>
+      <p style= 'float: right;'>{{entry.timestamp | date:'shortDate'}}</p>
+      </ion-label>
     </ion-item>
-      
-   
+
+    <ion-item detail-push (click)='seeTasks(entry.id)'>
+      <ion-label>
+      {{entryDataService.listCompletedTasks(entry.id).length}} / 
+      {{entryDataService.getTaskListForPet(entry.id).length}}
+      Tasks Completed
+    </ion-label>
+    </ion-item>
+    
 
 
     
-    <ion-buttons item-end style= 'float: right;'>
+  
       
-    <button small color='primary' ion-button outline (click)="editEntry(entry.id)">Bio</button>
-  </ion-buttons>
+    <!-- <button item-end style= 'float: right;' small color='primary' ion-button outline (click)="editEntry(entry.id)">Bio</button> -->
+
   </ion-card-content>
 
   </ion-card>
