@@ -8,6 +8,8 @@ import { HomePage } from '../pages/home/home';
 import { EntryDetailPage } from '../pages/entry-detail/entry-detail';
 import { CreatePage } from '../pages/create/create';
 import { TaskPage } from '../pages/task/task'
+import { DayPage } from '../pages/day/day'
+
 
 
 @Component({
@@ -44,6 +46,9 @@ export class MyApp {
     console.log("This is a function")
     this.nav.setRoot(TaskPage)
   }
-
+  public DayOverview() {
+    console.log("This is a function")
+    this.nav.setRoot(DayPage)
+  }
 }
 
