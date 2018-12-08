@@ -16,6 +16,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { NavController } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
+import { MultiPickerModule } from 'ion-multi-picker';
+
 
 
 
@@ -34,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    MultiPickerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -47,9 +47,8 @@
   <ion-list>
     
     
-    
     <ion-item>
-      <ion-label>Task Schedule:</ion-label>
+      <ion-label>Task Schedule</ion-label>
         <ion-select value= "Daily" [(ngModel)]="task.schedule"><ion-icon small item-end name="arrow-dropdown"></ion-icon>
           <ion-option>Daily</ion-option>
           <!-- <ion-option>Every Other Day</ion-option> -->
@@ -59,6 +58,16 @@
           <!-- <ion-option>Yearly</ion-option> -->
         </ion-select>
     </ion-item>
+
+    <ion-item *ngIf=" task.schedule == 'Weekly'" >
+    <ion-label>Day of Week</ion-label>      
+    <ion-multi-picker id="default" [(ngModel)] = "task.dayOfWeek" item-content [multiPickerColumns]="daysOfWeek"></ion-multi-picker>
+      </ion-item>
+
+    <ion-item *ngIf=" task.schedule == 'Monthly'">
+        <ion-label>Day of Month</ion-label>      
+        <ion-datetime displayFormat="D" [(ngModel)]="task.dayOfMonth"></ion-datetime>  
+      </ion-item>
     
     
     

@@ -37,6 +37,7 @@
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-sqlite-storage": "^2.5.1",
     "firebase": "^5.5.9",
+    "ion-multi-picker": "^2.1.2",
     "ionic": "^4.3.0",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",

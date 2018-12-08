@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Pet, Task } from '../../models/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
+import { MultiPickerModule } from 'ion-multi-picker';
+
 
 
 
@@ -19,11 +21,29 @@ export class TaskDetailPage {
   petlist: Pet[] =[]
   edit_check: boolean;
   selectOptions: object;
+  daysOfWeek: any[];
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public entryDataService: EntryDataServiceProvider,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public picker: MultiPickerModule
+    ) {
+
+      this.daysOfWeek = [
+        {
+          name: 'Days',
+          options: [
+            { text: 'Sunday', value: 'Sunday' },
+            { text: 'Monday', value: 'Monday' },
+            { text: 'Tuesday', value: 'Tuesday' },
+            { text: 'Wednesday', value: 'Wednesday'},
+            { text: 'Thursday', value: 'Thursday' },
+            { text: 'Friday', value: 'Friday' },
+            { text: 'Saturday', value: 'Saturday' }
+          ]
+        }
+      ];
 
     this.petlist = entryDataService.getEntries();
     let pet_id = this.navParams.get("petID");
