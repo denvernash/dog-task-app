@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Pet, Task } from '../../models/entry';
+import { Pet, Task, Day } from '../../models/entry';
 import { EntryDetailPage } from '../entry-detail/entry-detail';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { TaskDetailPage } from '../task-detail/task-detail';
@@ -19,12 +19,27 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'day.html',
 })
 export class DayPage {
+  public today:  Date;
+  public shownDay: string;
+  public options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public entryDataService: EntryDataServiceProvider,
+    ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DayPage');
+    this.today = new Date();
+    this.shownDay = this.today.toLocaleDateString("en-US", this.options)
   }
+
+datetoID() {
+
+}
+
+  
 
 }

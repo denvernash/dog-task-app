@@ -14,7 +14,15 @@
 
   
 <ng-container *ngIf = 'entry.id == -1; else pet' >
-<h1>All Pet Tasks</h1>
+      This is {{this.shownDay}}. {{this.numMonth}}. {{this.numWeek}}. Here's what you have to do today:
+
+      <ng-container *ngFor="let task of entryDataService.tasks">
+
+            <ion-item *ngIf= "task.dayNum == this.numMonth">{{this.numMonth}}</ion-item>
+</ng-container>
+
+
+<h1>All Pet Tasks for </h1>
 
 
 <!-- ****** DAILY, WEEKLY, MONTHLY TASKS  ******     -->

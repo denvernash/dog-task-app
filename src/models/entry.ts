@@ -14,7 +14,7 @@ export class Task {
     notes: string;
     deadline: string;
     schedule: string;
-    refresh: number;
+    dayNum: number;
     complete: boolean;
     completed_date: Date;
     time: number;
@@ -22,6 +22,10 @@ export class Task {
 }
 
 export class Day {
+    today: Date;
+    shownDay: string;
+    numMonth: number;
+    numWeek: number;
     id: number;
     tasks: Task[];
     name: string;

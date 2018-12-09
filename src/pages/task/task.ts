@@ -5,6 +5,7 @@ import { EntryDetailPage } from '../entry-detail/entry-detail';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { TaskDetailPage } from '../task-detail/task-detail';
 import { AlertController } from 'ionic-angular';
+import { PublicFeature } from '@angular/core/src/render3';
 
 
 
@@ -18,6 +19,11 @@ export class TaskPage {
   public tasklist: Task[];
   private entry: Pet;
   private createDate: Date;
+  public today:  Date;
+  public shownDay: string;
+  public numMonth: number;
+  public numWeek; number;
+  public options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
 
@@ -56,9 +62,17 @@ export class TaskPage {
 
   }
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad DayPage');
+
+  }
+
 ngOnInit() {
 console.log(this.entryDataService.tasks);
-this.entryDataService.refreshSchedule();
+this.today = new Date();
+this.shownDay = this.today.toLocaleDateString("en-US", this.options)
+this.numMonth = this.today.getDate();
+this.numWeek = this.today.getDay();
 }
 
 

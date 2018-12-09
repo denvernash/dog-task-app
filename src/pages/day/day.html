@@ -17,6 +17,38 @@
 
 
 <ion-content padding>
-  This is a day.
+  This is {{this.shownDay}}. Here's what you have to do today:
+
+  <ng-container *ngFor="let task of entryDataService.tasks">
+      <ion-card *ngIf= 'task.schedule == schedule && task.pet_id == entry.id'>
+    
+    
+      <ion-list>
+       <ion-item detail-push color= 'secondary' (click)="editTask(task.id, task.pet_id)">
+        <ion-avatar item-start>
+            <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
+        </ion-avatar>
+        <h2><strong>{{task.title}}</strong></h2>
+  
+        
+          </ion-item>
+      
+      
+  
+              <ion-item><ion-icon color= 'primary' name = 'list-box'></ion-icon> Notes: {{task.notes}}</ion-item>
+              
+  
+  
+              <ion-item>
+              <ion-label><ion-icon color= 'primary' name= 'timer'></ion-icon> Due: {{task.deadline}}</ion-label>
+                <ion-input placeholder= "Completed?" disabled=true [value] = "task.completed_date | date:'short'"></ion-input>
+                <ion-checkbox item-end checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
+              </ion-item>
+            
+          </ion-list>
+              
+             
+        </ion-card>
+      </ng-container>
 
 </ion-content>

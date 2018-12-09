@@ -71,6 +71,7 @@ export class EntryDataServiceProvider {
         newbie.notes = childSnapshot.val().notes;
         newbie.deadline = childSnapshot.val().deadline;
         newbie.schedule = childSnapshot.val().schedule;
+        newbie.dayNum = childSnapshot.val().dayNum;
         newbie.complete = childSnapshot.val().complete;
         if (newbie.complete) {
           console.log(".complete true, getting time")
@@ -282,6 +283,7 @@ public updateTask(newTask: Task): void {
   taskToUpdate.notes = newTask.notes;
   taskToUpdate.schedule = newTask.schedule;
   taskToUpdate.deadline = newTask.deadline;
+  taskToUpdate.dayNum = newTask.dayNum;
   taskToUpdate.complete = newTask.complete;
   taskToUpdate.completed_date = newTask.completed_date;
   taskToUpdate.time = newTask.time;
@@ -447,7 +449,7 @@ private saveDays(): void {
       notes: '',
       deadline: data.deadline,
       schedule: data.schedule,
-      refresh: 0,
+      dayNum: 0,
       complete: false,
       completed_date: null,
       time: null
@@ -555,36 +557,6 @@ public listCompletedTasks(petID): any[] {
     }
   }
  return completedTasks
-}
-
-
-
-
-/*!!!!Doesnt loop properly*/
-public refreshSchedule() {
-  for (let task of this.tasks) {
-    if (task.schedule === 'Daily') {
-      task.refresh = 5;
-      setInterval(() => {
-        task.complete = false;
-    }, task.refresh);
-    }
-    else if (task.schedule === 'Weekly') {
-      task.refresh = 10;
-      setInterval(() => {
-        task.complete = false;
-    }, task.refresh);
-
-
-    }
-    else {
-      task.refresh = 15; 
-      setInterval(() => {
-        task.complete = false;
-    }, task.refresh);
-    }
-    console.log(task.refresh);
-  }
 }
 
 } // <<----- HERE ENDS THE CLASS EntryDataServiceProvider
