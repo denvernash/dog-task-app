@@ -95,7 +95,7 @@ export class TaskDetailPage {
     console.log('giving taskid -1')
     this.task.deadline = "08:00";
     this.task.schedule = 'Daily';
-    this.task.dayNum = 
+    this.task.dayNum = 0;
   } else {
     console.log("Here's my id's", taskID, pet_id)
     
