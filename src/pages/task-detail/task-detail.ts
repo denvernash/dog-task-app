@@ -30,22 +30,6 @@ export class TaskDetailPage {
     public alertCtrl: AlertController,
     public picker: MultiPickerModule
     ) {
-
-      this.daysOfWeek = [
-        {
-          name: 'Days',
-          options: [
-            { text: 'Sunday', value: '0' },
-            { text: 'Monday', value: '1' },
-            { text: 'Tuesday', value: '2' },
-            { text: 'Wednesday', value: '3'},
-            { text: 'Thursday', value: '4' },
-            { text: 'Friday', value: '5' },
-            { text: 'Saturday', value: '6' }
-          ]
-        },
-
-        
         this.daysOfMonth = [
           {
             name: 'Days',
@@ -82,7 +66,7 @@ export class TaskDetailPage {
               { text: '30', value: '30' },
               { text: '31', value: '31' }
             ]
-          }]
+          }
       ];
 
     this.petlist = entryDataService.getEntries();
@@ -111,7 +95,7 @@ export class TaskDetailPage {
     console.log('giving taskid -1')
     this.task.deadline = "08:00";
     this.task.schedule = 'Daily';
-    this.task.dayNum = 0
+    this.task.dayNum = 
   } else {
     console.log("Here's my id's", taskID, pet_id)
     

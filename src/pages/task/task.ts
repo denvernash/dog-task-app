@@ -24,8 +24,8 @@ export class TaskPage {
   public numMonth: number;
   public numWeek; number;
   public options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-
+  public todaytasks = true;
+  public alltasks = true;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -85,7 +85,21 @@ else {
 }
 }
 
+public showAllTasks() {
+  this.alltasks = false; 
+}
 
+public hideAllTasks() {
+  this.alltasks = true; 
+}
+
+public showTodayTasks() {
+  this.todaytasks = false; 
+}
+
+public hideTodayTasks() {
+  this.todaytasks = true; 
+}
 
 private editTask(taskID: number, petID: number) {
 console.log("editing entry ", petID);

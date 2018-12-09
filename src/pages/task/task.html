@@ -14,21 +14,60 @@
 
   
 <ng-container *ngIf = 'entry.id == -1; else pet' >
-      This is {{this.shownDay}}. {{this.numMonth}}. {{this.numWeek}}. Here's what you have to do today:
-
-      <ng-container *ngFor="let task of entryDataService.tasks">
-
-            <ion-item *ngIf= "task.dayNum == this.numMonth">{{this.numMonth}}</ion-item>
-</ng-container>
 
 
-<h1>All Pet Tasks for </h1>
+      <p>Today is {{this.shownDay}}!</p>
+
+        <h2>Today's Tasks</h2>
+        <button ion-button (click) ="showTodayTasks()" small>Show</button>
+        <button ion-button (click) ="hideTodayTasks()" small>Hide</button>
+
+      <h2>All Tasks</h2>
+      <button ion-button (click) ="showAllTasks()" small >Show</button>
+      <button ion-button (click) ="hideAllTasks()" small>Hide</button>
+
+
+
+      <div *ngIf= "this.todaytasks == false" >
+        <ng-container *ngFor="let task of entryDataService.tasks">
+        <ion-card *ngIf= 'task.dayNum == this.numWeek || task.dayNum == this.numMonth || task.dayNum == 32'>
+      
+      
+        <ion-list>
+         <ion-item detail-push color= 'secondary' (click)="editTask(task.id, task.pet_id)">
+          <ion-avatar item-start>
+              <img [src]="entryDataService.getEntryByID(task.pet_id).image" />
+          </ion-avatar>
+          <h2><strong>{{task.title}}</strong></h2>
+          
+            </ion-item>
+        
+        
+    
+                <ion-item>
+                <ion-icon color= 'primary' name = 'list-box'></ion-icon> Notes: {{task.notes}}
+                </ion-item>
+                <ion-item>
+                
+                <ion-label><ion-icon color= 'primary' name= 'timer'></ion-icon> Due: {{task.deadline}}</ion-label>
+                  <ion-input placeholder= "Completed?" disabled=true [value] = "task.completed_date | date:'short'"></ion-input>
+                  <ion-checkbox item-end checked="false" [(ngModel)]= task.complete (ionChange)=toggleComplete(task.id)></ion-checkbox>
+                </ion-item>
+              
+            </ion-list>
+                
+               
+          </ion-card>
+        </ng-container>
+    </div>
+
 
 
 <!-- ****** DAILY, WEEKLY, MONTHLY TASKS  ******     -->
     
+        <div *ngIf= "this.alltasks == false" >
         <ng-container *ngFor= 'let schedule of ["Daily", "Weekly", "Monthly"]'>
-        <h2 *ngIf= 'entryDataService.verifyScheduleExists(schedule, entryDataService.entries)'>{{schedule}}</h2>
+        <h3 *ngIf= 'entryDataService.verifyScheduleExists(schedule, entryDataService.entries)'>All {{schedule}} Tasks</h3>
         <ng-container *ngFor="let task of entryDataService.tasks">
         <ion-card *ngIf= 'task.schedule == schedule'>
       
@@ -63,8 +102,10 @@
           </ion-card>
         </ng-container>
     </ng-container>
-
+</div>
 </ng-container>
+
+
 
 <ng-template #pet>
 <h1>Tasks for {{entry.title}}</h1>

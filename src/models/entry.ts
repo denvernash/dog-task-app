@@ -33,6 +33,8 @@ export class Day {
     start_time: number;
     end_date: Date;
     end_time: number;
+    todaytasks: boolean;
+    alltasks: boolean;
 }
 
 export class Photo {

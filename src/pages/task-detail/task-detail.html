@@ -60,13 +60,21 @@
     </ion-item>
 
     <ion-item *ngIf=" task.schedule == 'Weekly'" >
-    <ion-label>Day of Week</ion-label>      
-    <ion-multi-picker id="default" [(ngModel)] = "task.dayNum" item-content [multiPickerColumns]="daysOfWeek"></ion-multi-picker>
-      </ion-item>
+        <ion-label>Day of the Week</ion-label>
+        <ion-select value= "Sunday" [(ngModel)]="task.dayNum"><ion-icon small item-end name="arrow-dropdown"></ion-icon>
+          <ion-option value="0">Sunday</ion-option>
+          <ion-option value="1">Monday</ion-option>
+          <ion-option value="2">Tuesday</ion-option>
+          <ion-option value="3">Wednesday</ion-option>
+          <ion-option value="4">Thursday</ion-option>
+          <ion-option value="5">Friday</ion-option>
+          <ion-option value="6">Saturday</ion-option>
+        </ion-select>
+      </ion-item>   
 
     <ion-item *ngIf=" task.schedule == 'Monthly'">
         <ion-label>Day of Month</ion-label>  
-        <ion-multi-picker id="default" [(ngModel)] = "task.dayNum" item-content [multiPickerColumns]="daysOfMonth"></ion-multi-picker>    
+        <ion-multi-picker [(ngModel)] = "task.dayNum" item-content [multiPickerColumns]="daysOfMonth"></ion-multi-picker>    
       </ion-item>
     
     <ion-item>

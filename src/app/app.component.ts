@@ -46,9 +46,6 @@ export class MyApp {
     console.log("This is a function")
     this.nav.setRoot(TaskPage)
   }
-  public DayOverview() {
-    console.log("This is a function")
-    this.nav.setRoot(DayPage)
-  }
+
 }
 

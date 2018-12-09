@@ -449,7 +449,7 @@ private saveDays(): void {
       notes: '',
       deadline: data.deadline,
       schedule: data.schedule,
-      dayNum: 0,
+      dayNum: 32, /*This is bad but for now, this will be the default value so the 'natural' weekly and monthly dayNums won't interact with this (imp. for daily tasks)*/
       complete: false,
       completed_date: null,
       time: null
